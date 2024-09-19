@@ -20,32 +20,7 @@ public class MainBuildingLogic : MonoBehaviour
     {
         _building = GetComponentInChildren<Building>();
         _boxCollider.isTrigger = true;
-    }    
-
-    public bool CheckBuildPermission(Wallet wallet)
-    {
-
-        if (!wallet.CheckBuildingCost(_building.BuildingCost))
-        {
-            _haveMoneyForBuild = false;
-            return false;
-        }
-        else 
-            _haveMoneyForBuild = true;
-
-        else
-        {
-            if (_canBuild && _haveMoneyForBuild)
-            {
-                wallet.SpendMoney(_building.BuildingCost);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
+    }  
 
     public void CheckBuildPermission()
     {
@@ -53,7 +28,7 @@ public class MainBuildingLogic : MonoBehaviour
         {            
             _building.ChangeColor(new Color(0, 255, 0, .50f));                           
         }
-        else if (!_canBuild || !_haveMoneyForBuild)
+        else
         {
             _building.ChangeColor(new Color(255, 0, 0, .50f));               
         }

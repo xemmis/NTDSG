@@ -30,7 +30,7 @@ public class BuildPlacementLogic : MonoBehaviour
 
         MoveFlyingBuilding();
 
-        if (Input.GetMouseButtonDown(0) && _flyingBuilding.CheckBuildPermission(_wallet))            
+        if (Input.GetMouseButtonDown(0) && _flyingBuilding._canBuild)            
             _flyingBuilding = null;
 
         if (Input.GetMouseButtonDown(1))
