@@ -27,19 +27,24 @@ public class BuildPlacementLogic : MonoBehaviour
     {
         if (_flyingBuilding == null)
             return;
-
         MoveFlyingBuilding();
 
-        if (Input.GetMouseButtonDown(0) && _flyingBuilding._canBuild)            
+        if (Input.GetMouseButtonDown(0) && _flyingBuilding._canBuild)
+        {
+            _wallet.SpendMoney(_flyingBuilding.Build.BuildCost);
             _flyingBuilding = null;
+        }
 
         if (Input.GetMouseButtonDown(1))
             Destroy(_flyingBuilding.gameObject);
     }
 
     public void StartPlacingBuilding(MainBuildingLogic BuildingPrefab)
-    {        
-        _flyingBuilding = Instantiate(BuildingPrefab);       
+    {
+        if (_flyingBuilding != null)
+            return;
+        _flyingBuilding = Instantiate(BuildingPrefab);
+        _flyingBuilding.CheckCostToWallet(_wallet);
     }
 
     private void MoveFlyingBuilding()

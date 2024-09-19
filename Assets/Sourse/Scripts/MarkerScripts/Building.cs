@@ -3,11 +3,12 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    [field: SerializeField] public int BuildingCost { get; private set; } = 15;
+    [field: SerializeField] public int BuildCost { get; private set; }
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer> ();
     }
+
     public void ChangeColor(Color color)
     {
         _spriteRenderer.color = color;

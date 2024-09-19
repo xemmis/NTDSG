@@ -3,12 +3,10 @@
 
 public class MainBuildingLogic : MonoBehaviour
 {
-    [SerializeField] private BoxCollider2D _boxCollider;  
-    
-
-    [SerializeField] private bool _isBuilded;
-    [SerializeField] private bool _haveMoneyForBuild;
-    [field: SerializeField] public Building _building {  get; private set; }
+    [SerializeField] private BoxCollider2D _boxCollider;      
+    [SerializeField] private bool _isBuilded;       
+    [SerializeField] private bool _haveMoneyForBuild;    
+    [field: SerializeField] public Building Build {  get; private set; }    
     [field: SerializeField] public bool _canBuild { get; private set; }
 
     private void Awake()
@@ -17,20 +15,30 @@ public class MainBuildingLogic : MonoBehaviour
     }
 
     private void Start()
-    {
-        _building = GetComponentInChildren<Building>();
+    {   
+        if (Build == null)
+        {
+            Debug.LogError("Building component not found in children!");
+        }
+
         _boxCollider.isTrigger = true;
     }  
 
+    public void CheckCostToWallet(Wallet wallet)
+    {        
+        _haveMoneyForBuild = wallet.CheckBuildingCost(Build.BuildCost);
+        print(_haveMoneyForBuild);
+    }
+
     public void CheckBuildPermission()
     {
-        if (_canBuild)
+        if (_canBuild && _haveMoneyForBuild)
         {            
-            _building.ChangeColor(new Color(0, 255, 0, .50f));                           
+            Build.ChangeColor(new Color(0, 255, 0, .50f));                           
         }
         else
         {
-            _building.ChangeColor(new Color(255, 0, 0, .50f));               
+            Build.ChangeColor(new Color(255, 0, 0, .50f));               
         }
     }
 
@@ -43,7 +51,7 @@ public class MainBuildingLogic : MonoBehaviour
             CheckBuildPermission();
         }
 
-        if (collision.TryGetComponent<BuildingZone>(out BuildingZone Zone))
+        if (collision.TryGetComponent<BuildingZone>(out BuildingZone Zone) && _haveMoneyForBuild)
         {            
             _canBuild = true;
             CheckBuildPermission();
@@ -52,14 +60,14 @@ public class MainBuildingLogic : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {        
+        if (collision.TryGetComponent<MainBuildingLogic>(out MainBuildingLogic AnotherBulding) && _haveMoneyForBuild)
+        {
+            _canBuild = true;
+            CheckBuildPermission();
+        }
         if (collision.TryGetComponent<BuildingZone>(out BuildingZone zone))
         {            
             _canBuild = false;
-            CheckBuildPermission();
-        }
-        if (collision.TryGetComponent<MainBuildingLogic>(out MainBuildingLogic AnotherBulding))
-        {
-            _canBuild = true;
             CheckBuildPermission();
         }
     }
