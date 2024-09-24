@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BuildPlacementLogic : MonoBehaviour
@@ -5,7 +6,8 @@ public class BuildPlacementLogic : MonoBehaviour
     [SerializeField] private MainBuildingLogic _flyingBuilding;
     [SerializeField] private NavigationBar _navigationBar;
     [SerializeField] private Wallet _wallet;
-    
+
+    public event Action IsBuilded;
     private Camera _camera;
 
     private void Awake()
@@ -32,6 +34,7 @@ public class BuildPlacementLogic : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && _flyingBuilding._canBuild)
         {
             _wallet.SpendMoney(_flyingBuilding.Build.BuildCost);
+            IsBuilded?.Invoke();
             _flyingBuilding = null;
         }
 
@@ -44,6 +47,8 @@ public class BuildPlacementLogic : MonoBehaviour
         if (_flyingBuilding != null)
             return;
         _flyingBuilding = Instantiate(BuildingPrefab);
+        _flyingBuilding.Build.TakeNavigationBar(_navigationBar);
+        _flyingBuilding.SubscribeToIsBuildAction(IsBuilded);
         _flyingBuilding.CheckCostToWallet(_wallet);
     }
 
