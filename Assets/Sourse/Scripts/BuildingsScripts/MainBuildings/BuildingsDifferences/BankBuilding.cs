@@ -14,13 +14,15 @@ public class BankBuilding : Building
     }
 
     public override void ChangeCondition(bool condition)
-    {        
-        _isPlacing = condition;
-        if (!condition)
+    {  
+        print(condition);
+        IsPlaced = condition;
+        if (condition)
             StartCoroutine(LogicPerTick());
     }
     private IEnumerator LogicPerTick()
     {
+        print(IsPlaced);
         yield return new WaitForSeconds(_tickForGoldEarn);
         StartCoroutine(MoneyPerTick());
     }

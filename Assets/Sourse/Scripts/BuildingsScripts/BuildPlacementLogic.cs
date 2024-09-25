@@ -28,7 +28,7 @@ public class BuildPlacementLogic : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && _flyingBuilding._canBuild)
         {
             _wallet.SpendMoney(_flyingBuilding.Build.BuildCost);
-            _flyingBuilding.Build.ChangeCondition(false);
+            _flyingBuilding.Build.ChangeCondition(true);
             _flyingBuilding = null;
         }
 
