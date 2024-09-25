@@ -1,10 +1,12 @@
 ﻿using System;
 using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 
 public class MainBuildingLogic : MonoBehaviour
 {
-    [SerializeField] private BoxCollider2D _boxCollider;
+    private Rigidbody2D _rigidBody2d;
+    private BoxCollider2D _boxCollider;
     [SerializeField] private bool _haveMoneyForBuild;
     [field: SerializeField] public Building Build { get; private set; }
     [field: SerializeField] public bool _canBuild { get; private set; }    
@@ -12,22 +14,14 @@ public class MainBuildingLogic : MonoBehaviour
 
     private void Awake()
     {
+        _rigidBody2d = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Start()
     {
+        _rigidBody2d.gravityScale = 0;
         _boxCollider.isTrigger = true;
-    }
-
-    public void SubscribeToIsBuildAction(Action name)
-    {
-        name += ConditionEvent;
-    }
-
-    public void UnSubscribeToTheBuildAction(Action name)
-    {
-        name -= ConditionEvent;
     }
 
     private void ConditionEvent()
@@ -52,10 +46,8 @@ public class MainBuildingLogic : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        print(collision.name);    
+    {          
         if (collision.TryGetComponent<MainBuildingLogic>(out MainBuildingLogic AnotherBuilding))
         {
             _canBuild = false;
@@ -70,8 +62,7 @@ public class MainBuildingLogic : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D collision)
-    {
-        print(collision.name);    
+    {          
         if (collision.TryGetComponent<MainBuildingLogic>(out MainBuildingLogic AnotherBulding) && _haveMoneyForBuild)
         {
             _canBuild = true;

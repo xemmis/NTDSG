@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 427391906823768947}
   - component: {fileID: 6743686700289446846}
   - component: {fileID: 1533593537111423666}
-  - component: {fileID: 34733500193952646}
   m_Layer: 0
   m_Name: BankModel
   m_TagString: Untagged
@@ -99,30 +98,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 6743686700289446846}
-  _isPlacing: 0
   <LevelOfBuilding>k__BackingField: 1
+  _isPlacing: 0
   _navBar: {fileID: 0}
   <BuildCost>k__BackingField: 30
   _wallet: {fileID: 0}
   _tickForGoldEarn: 5
   _goldForTick: 15
---- !u!114 &34733500193952646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3476213653542031240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b11f14d5cbde0e43921e709d265290d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  _isPlacing: 0
-  <LevelOfBuilding>k__BackingField: 0
-  _navBar: {fileID: 0}
-  <BuildCost>k__BackingField: 0
 --- !u!1 &5140239641886030658
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,8 +114,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 448212414719654279}
-  - component: {fileID: 180260084531811464}
   - component: {fileID: 7204341481221945774}
+  - component: {fileID: 1884762101234666878}
+  - component: {fileID: 7024195447640520495}
   m_Layer: 0
   m_Name: BankPrebab
   m_TagString: Untagged
@@ -157,7 +140,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &180260084531811464
+--- !u!114 &7204341481221945774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140239641886030658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090b0f8be33e8314d9836fe1d95d1f5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _haveMoneyForBuild: 0
+  <Build>k__BackingField: {fileID: 1533593537111423666}
+  <_canBuild>k__BackingField: 0
+--- !u!50 &1884762101234666878
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140239641886030658}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &7024195447640520495
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,7 +211,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -202,19 +227,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7204341481221945774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5140239641886030658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 090b0f8be33e8314d9836fe1d95d1f5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _boxCollider: {fileID: 180260084531811464}
-  _haveMoneyForBuild: 0
-  <Build>k__BackingField: {fileID: 1533593537111423666}
-  <_canBuild>k__BackingField: 0

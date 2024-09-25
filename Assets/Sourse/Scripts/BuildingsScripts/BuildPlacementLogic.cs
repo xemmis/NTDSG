@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class BuildPlacementLogic : MonoBehaviour
@@ -6,17 +5,12 @@ public class BuildPlacementLogic : MonoBehaviour
     [SerializeField] private MainBuildingLogic _flyingBuilding;
     [SerializeField] private NavigationBar _navigationBar;
     [SerializeField] private Wallet _wallet;
-
-    public event Action IsBuilded;
+    
     private Camera _camera;
-
-    private void Awake()
-    {
-        _camera = Camera.main;
-    }
 
     private void Start()
     {
+        _camera = Camera.main;
         _wallet = _navigationBar.Wallet;
     }
 
@@ -34,7 +28,7 @@ public class BuildPlacementLogic : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && _flyingBuilding._canBuild)
         {
             _wallet.SpendMoney(_flyingBuilding.Build.BuildCost);
-            IsBuilded?.Invoke();
+            _flyingBuilding.Build.ChangeCondition(false);
             _flyingBuilding = null;
         }
 
@@ -47,8 +41,7 @@ public class BuildPlacementLogic : MonoBehaviour
         if (_flyingBuilding != null)
             return;
         _flyingBuilding = Instantiate(BuildingPrefab);
-        _flyingBuilding.Build.TakeNavigationBar(_navigationBar);
-        _flyingBuilding.SubscribeToIsBuildAction(IsBuilded);
+        _flyingBuilding.Build.TakeNavigationBar(_navigationBar);        
         _flyingBuilding.CheckCostToWallet(_wallet);
     }
 

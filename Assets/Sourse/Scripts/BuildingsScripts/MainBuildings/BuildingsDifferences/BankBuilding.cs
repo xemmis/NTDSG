@@ -13,18 +13,21 @@ public class BankBuilding : Building
         _wallet = _navBar.Wallet;
     }
 
-    private IEnumerator MoneyPerTick()
-    {
-        yield return new WaitForSeconds(_tickForGoldEarn);
-        _wallet.EarnMoney(_goldForTick * LevelOfBuilding);
-        ChangeCondition(false);
-    }
     public override void ChangeCondition(bool condition)
-    {
-        print(condition);
+    {        
         _isPlacing = condition;
         if (!condition)
-            StartCoroutine(MoneyPerTick());
+            StartCoroutine(LogicPerTick());
+    }
+    private IEnumerator LogicPerTick()
+    {
+        yield return new WaitForSeconds(_tickForGoldEarn);
+        StartCoroutine(MoneyPerTick());
+    }
+    private IEnumerator MoneyPerTick()
+    {
+        _wallet.EarnMoney(_goldForTick * LevelOfBuilding);        
+        yield return StartCoroutine(LogicPerTick());
     }
 
     private void OnDestroy()
