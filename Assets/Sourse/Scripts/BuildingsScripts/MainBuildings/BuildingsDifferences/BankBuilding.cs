@@ -18,7 +18,10 @@ public class BankBuilding : Building
         print(condition);
         IsPlaced = condition;
         if (condition)
+        {
             StartCoroutine(LogicPerTick());
+            _buildSize.Placed();
+        }
     }
     private IEnumerator LogicPerTick()
     {

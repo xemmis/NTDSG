@@ -3,9 +3,11 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     [SerializeField] private protected SpriteRenderer _spriteRenderer;
+    [SerializeField] private protected BuildSize _buildSize;
+
     [field: SerializeField] public int LevelOfBuilding { get; private set; }
     [field: SerializeField] private protected bool IsPlaced;
-    [SerializeField] private protected NavigationBar _navBar;
+    [field: SerializeField] public NavigationBar _navBar { get; private set; }
     [field: SerializeField] public int BuildCost { get; private set; }
 
     private void Start()
@@ -25,6 +27,10 @@ public class Building : MonoBehaviour
 
     public virtual void ChangeCondition(bool condition)
     {
+        if (condition)
+        {
+           _buildSize.Placed();
+        }
         IsPlaced = condition;
     }
 
@@ -32,7 +38,4 @@ public class Building : MonoBehaviour
     {
         _spriteRenderer.color = color;
     }
-
-
-
 }

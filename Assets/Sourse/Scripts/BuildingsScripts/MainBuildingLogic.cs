@@ -7,9 +7,10 @@ public class MainBuildingLogic : MonoBehaviour
 {
     private Rigidbody2D _rigidBody2d;
     private BoxCollider2D _boxCollider;
-    [SerializeField] private bool _haveMoneyForBuild;
+    [field: SerializeField] public bool IsSpawned { get; private set; }
     [field: SerializeField] public Building Build { get; private set; }
-    [field: SerializeField] public bool _canBuild { get; private set; }    
+    [field: SerializeField] public bool CanBuild { get; private set; }
+    public Action IsPlaced;
 
 
     private void Awake()
@@ -24,54 +25,40 @@ public class MainBuildingLogic : MonoBehaviour
         _boxCollider.isTrigger = true;
     }
 
-    private void ConditionEvent()
+    public void ChangeCondition(bool Spawed)
     {
-        Build.ChangeCondition(false);
+        IsSpawned = Spawed;
     }
 
-    public void CheckCostToWallet(Wallet wallet)
-    {
-        _haveMoneyForBuild = wallet.CheckBuildingCost(Build.BuildCost);
+    public bool CheckCostToWallet(Wallet wallet)
+    {         
+        return wallet.CheckBuildingCost(Build.BuildCost); 
     }
 
-    public void CheckBuildPermission()
+    public void HandleEnter(Collider2D collision)
     {
-        if (_canBuild && _haveMoneyForBuild)
-        {
-            Build.ChangeColor(new Color(0, 255, 0, .50f));
-        }
-        else
-        {
-            Build.ChangeColor(new Color(255, 0, 0, .50f));
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {          
         if (collision.TryGetComponent<MainBuildingLogic>(out MainBuildingLogic AnotherBuilding))
         {
-            _canBuild = false;
-            CheckBuildPermission();
+            CanBuild = false;
         }
 
-        if (collision.TryGetComponent<BuildingZone>(out BuildingZone Zone) && _haveMoneyForBuild)
+        if (collision.TryGetComponent<BuildingZone>(out BuildingZone Zone) && CheckCostToWallet(Build._navBar.Wallet))
         {
-            _canBuild = true;
-            CheckBuildPermission();
+            CanBuild = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {          
-        if (collision.TryGetComponent<MainBuildingLogic>(out MainBuildingLogic AnotherBulding) && _haveMoneyForBuild)
+    public void HandleExit(Collider2D collision)
+    {
+        if (collision.TryGetComponent<MainBuildingLogic>(out MainBuildingLogic AnotherBuilding))
         {
-            _canBuild = true;
-            CheckBuildPermission();
+            CanBuild = true;
         }
-        if (collision.TryGetComponent<BuildingZone>(out BuildingZone zone))
+
+        if (collision.TryGetComponent<BuildingZone>(out BuildingZone Zone))
         {
-            _canBuild = false;
-            CheckBuildPermission();
+            CanBuild = false;
         }
     }
+
 }

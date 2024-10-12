@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BuildPlacementLogic : MonoBehaviour
@@ -5,12 +6,16 @@ public class BuildPlacementLogic : MonoBehaviour
     [SerializeField] private MainBuildingLogic _flyingBuilding;
     [SerializeField] private NavigationBar _navigationBar;
     [SerializeField] private Wallet _wallet;
-    
-    private Camera _camera;
+    [SerializeField] private Building _building;
+    [SerializeField] private Collider2D _anotherCollider;
+    [SerializeField] private bool _isEnter;
+    public Action IsPlaced;
 
     private void Start()
     {
-        _camera = Camera.main;
+        _flyingBuilding = GetComponent<MainBuildingLogic>();
+        _building = GetComponentInChildren<Building>();
+        _navigationBar = _building._navBar;
         _wallet = _navigationBar.Wallet;
     }
 
@@ -21,36 +26,38 @@ public class BuildPlacementLogic : MonoBehaviour
 
     private void CheckLogic()
     {
-        if (_flyingBuilding == null)
-            return;
-        MoveFlyingBuilding();
 
-        if (Input.GetMouseButtonDown(0) && _flyingBuilding._canBuild)
+        if (_anotherCollider != null)
         {
-            _wallet.SpendMoney(_flyingBuilding.Build.BuildCost);
-            _flyingBuilding.Build.ChangeCondition(true);
-            _flyingBuilding = null;
+            if (_isEnter)
+                _flyingBuilding.HandleEnter(_anotherCollider);
+            else if (!_isEnter)
+                _flyingBuilding.HandleExit(_anotherCollider);
         }
 
+        if (Input.GetMouseButtonDown(0) && _flyingBuilding.CanBuild)
+        {
+
+            _wallet.SpendMoney(_flyingBuilding.Build.BuildCost);
+            _flyingBuilding.Build.ChangeCondition(true);
+            IsPlaced?.Invoke();
+            Destroy(this);
+        }
         if (Input.GetMouseButtonDown(1))
             Destroy(_flyingBuilding.gameObject);
     }
 
-    public void StartPlacingBuilding(MainBuildingLogic BuildingPrefab)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_flyingBuilding != null)
-            return;
-        _flyingBuilding = Instantiate(BuildingPrefab);
-        _flyingBuilding.Build.TakeNavigationBar(_navigationBar);        
-        _flyingBuilding.CheckCostToWallet(_wallet);
+        _anotherCollider = collision;
+        _isEnter = true;
+        _flyingBuilding.HandleEnter(collision);
     }
 
-    private void MoveFlyingBuilding()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        Vector3 MousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        int x = Mathf.RoundToInt(MousePosition.x);
-        int y = Mathf.RoundToInt(MousePosition.y);
-
-        _flyingBuilding.transform.position = new Vector3(x, y, 0);
+        _anotherCollider = collision;
+        _isEnter = false;
+        _flyingBuilding.HandleExit(collision);
     }
 }

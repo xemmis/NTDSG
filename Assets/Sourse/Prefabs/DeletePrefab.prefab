@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 3823707036386979756}
   - component: {fileID: 2964117267228374417}
   - component: {fileID: 59725700911514380}
+  - component: {fileID: 6833159299056962219}
   m_Layer: 0
   m_Name: DeletePrefab
   m_TagString: Untagged
@@ -204,6 +205,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b12f1c3acaef94b9bff56193c3827d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <CanDelete>k__BackingField: 0
+  <Spawned>k__BackingField: 0
+  BuildingCondition: 0
+  _building: {fileID: 0}
+--- !u!114 &6833159299056962219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789430286995624979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a6f99232c7c6ed43b7ca32c117c2c2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _destroyButton: {fileID: 59725700911514380}
 --- !u!1 &4291259286651300419
 GameObject:
   m_ObjectHideFlags: 0

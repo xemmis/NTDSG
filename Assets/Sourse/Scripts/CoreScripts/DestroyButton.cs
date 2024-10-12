@@ -4,11 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class DestroyButton : MonoBehaviour
 {
+    [field: SerializeField] public bool CanDelete { get; private set; }
+    [field: SerializeField] public bool Spawned { get; private set; }
+
+    private MainBuildingLogic _buildingToDelete;
     private Rigidbody2D _rigidBody;
     private BoxCollider2D _boxCollider;
-    [field: SerializeField] public bool CanDelete { get; private set; }
     [SerializeField] private bool BuildingCondition;
-    [SerializeField] private Building _building;
+
     private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -19,49 +22,44 @@ public class DestroyButton : MonoBehaviour
 
     private void Update()
     {
-        InputLogic(_building);
+        InputLogicToDelete();
+    }
+
+    private void InputLogicToDelete()
+    {
+        if (Input.GetMouseButtonDown(1))
+            Destroy(gameObject);
+
+        if (_buildingToDelete != null) 
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Destroy(_buildingToDelete.gameObject);
+                Destroy(gameObject);
+            }        
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Building>(out Building component))
+        print(collision.name);
+        if (collision.TryGetComponent<MainBuildingLogic>(out MainBuildingLogic building))
         {
-            BuildingCondition = component.GetCondition();
-            if (!BuildingCondition)
-                return;
+            if (!building.Build.GetCondition())
+                Destroy(gameObject);
             CanDelete = true;
-            _building = component;
+            _buildingToDelete = building;
         }
         else
-        {
             CanDelete = false;
-        }
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Building>(out Building component))
+        print(collision.name);
+        if (collision.TryGetComponent<MainBuildingLogic>(out MainBuildingLogic building))
         {
             CanDelete = false;
-            _building = null;
+            _buildingToDelete = null;
         }
     }
-
-    private void InputLogic(Building building)
-    {
-        if (Input.GetMouseButton(1))
-        {
-            Destroy(gameObject);
-        }
-
-        if (!CanDelete)
-            return;
-
-        if (CanDelete && Input.GetMouseButton(0))
-        {
-            building.StopAllCoroutines();
-            Destroy(building.gameObject);
-        }
-    }
-
 }
