@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4941773476046264756}
   - component: {fileID: 6442349810069173645}
   - component: {fileID: 8444713861763187049}
-  - component: {fileID: 3617836832478720804}
   - component: {fileID: -2607392272841503188}
   - component: {fileID: 6484958115796487411}
   m_Layer: 0
@@ -36,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3083450649763753543
 Animator:
@@ -162,22 +161,6 @@ MonoBehaviour:
   _enemyCheckRadius: 6
   MaxArmor: 15
   _checkSurroudingsTick: 0.25
---- !u!114 &3617836832478720804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7739559437179896881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 124479d9d62968c4dad8ec4ebe454780, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _warrior: {fileID: 0}
-  _warriorMovement: {fileID: 0}
-  _animator: {fileID: 0}
-  _atackTick: 3
 --- !u!58 &-2607392272841503188
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -225,7 +208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6deaa01880721e439a6b8aa2cf28ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _protectPosition: {fileID: 0}
-  _followTick: 0.25
+  Attacking: 0
+  _canHit: 0
   _movementSpeed: 5
-  _stopDistance: 2.5
+  _animState: 0
+  currentPatrolIndex: 0
+  patrolPoints: []
+  _protectPosition: {fileID: 0}
