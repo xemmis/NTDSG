@@ -19,13 +19,6 @@ public class Warrior : MonoBehaviour
     public Action OnDeathAction;
     public Action <bool> OnHitAction;
 
-    private void OnDeath()
-    {
-        if (Health <= 0)
-            OnDeathAction?.Invoke();
-        _animator.SetTrigger("Death");
-        Destroy(this);
-    }
 
     private void Awake()
     {
@@ -40,7 +33,13 @@ public class Warrior : MonoBehaviour
         Armor = UnityEngine.Random.Range(5, 16);
         _rigidbody2D.gravityScale = 0;
     }    
-
+    private void OnDeath()
+    {
+        if (Health <= 0)
+            OnDeathAction?.Invoke();
+        _animator.SetTrigger("Death");
+    }
+  
     private void TakeHitAnimation()
     {
         if (Health < 37)

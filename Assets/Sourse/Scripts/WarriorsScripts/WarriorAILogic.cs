@@ -9,26 +9,25 @@ public class WarriorAILogic : MonoBehaviour
     private CircleCollider2D _circleCollider;
 
     private Warrior _thisWarrior;
+    private WarriorFight _warFight;
     private Animator _animator;
     private AIState _state;
     private Rigidbody2D _rb;
 
-    [SerializeField] private bool _attacking = false;
+    [SerializeField] private bool _attacking;
     [SerializeField] private bool _canHit;
-    [SerializeField] private bool _readyForHit;
-    [SerializeField] private bool _receivedDamage;
 
     [SerializeField] private float _movementSpeed = 5f;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _enemyCheckRadius = 5f;
     [SerializeField] private int _animState;
     [SerializeField] private int _currentPatrolIndex = 0;
+    [field: SerializeField] public Warrior EnemyWarrior { get; private set; }
 
-
-    [SerializeField] private Warrior _enemyWarrior;
     [SerializeField] private Transform[] _patrolPoints;
     [SerializeField] private Transform _protectPosition;
-    public Action<bool> OnDistanceToHit;
+
+    //public Action<bool> OnDistanceToHit;
 
     private void Awake()
     {
@@ -36,22 +35,24 @@ public class WarriorAILogic : MonoBehaviour
         _animator = GetComponent<Animator>();
         _circleCollider = GetComponent<CircleCollider2D>();
         _thisWarrior = GetComponent<Warrior>();
+        _warFight = GetComponent<WarriorFight>();
     }
 
     private void Start()
     {
-        _attackSpeed = UnityEngine.Random.Range(0.5f, 1.5f);
+
         _circleCollider.isTrigger = true;
         _thisWarrior.OnDeathAction += OnDeath;
-        _thisWarrior.OnHitAction += ReceivedDamageLogic;
         _state = AIState.Patrol;
         StartCoroutine(CheckSurroundingsTick());
     }
-
+    private void OnDestroy()
+    {
+        _thisWarrior.OnDeathAction -= OnDeath;
+    }
 
     private void Update()
     {
-        print(_state);
         switch (_state)
         {
             case AIState.Idle:
@@ -71,20 +72,7 @@ public class WarriorAILogic : MonoBehaviour
                 break;
         }
     }
-    private void ChangeToFalseAttackCondition()
-    {
-        _attacking = false;
-    }
 
-    private void ReceivedDamageLogic(bool condition)
-    {
-        _receivedDamage = condition;
-    }
-
-    private void ChangeTrueAttackCondition()
-    {
-        _attacking = true;
-    }
     private void HandleIdle()
     {
 
@@ -93,6 +81,7 @@ public class WarriorAILogic : MonoBehaviour
     private void OnDeath()
     {
         StopAllCoroutines();
+        EnemyWarrior = null;
         _state = AIState.Idle;
         StartCoroutine(DeathTick());
     }
@@ -103,8 +92,40 @@ public class WarriorAILogic : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void HandleAttack()
+    {
+        if (_attacking && !_canHit)
+        {
+            print("atackreturn");
+            return;
+        }
+
+        _attacking = true;
+        StartCoroutine(AttackTick());
+    }
+
+    private IEnumerator AttackTick()
+    {
+
+        yield return new WaitForSeconds(_attackSpeed);
+        if (!_attacking && EnemyWarrior.Health <= 0)
+        {
+            yield break;
+            print("atackbreak");
+        }
+        print("atackk");
+        _animator.SetTrigger("Attack");
+        EnemyWarrior.TakePhysicalHit(_thisWarrior.Strength);
+        _attacking = false;
+    }
+
+
+
+
+
+
     private void HandlePatrol()
-    {        
+    {
         if (_patrolPoints.Length == 0) return;
         _state = AIState.Patrol;
         Transform targetPoint = _patrolPoints[_currentPatrolIndex];
@@ -121,43 +142,18 @@ public class WarriorAILogic : MonoBehaviour
     private void HandleChase()
     {
         _state = AIState.Chase;
-        transform.position = Vector2.MoveTowards(transform.position, _enemyWarrior.transform.position, _movementSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, EnemyWarrior.transform.position, _movementSpeed * Time.deltaTime);
 
     }
 
-    private void HandleAttack()
-    {
-        if (_attacking || !_canHit || !_readyForHit)
-            return;
-        StartCoroutine(AttackTick());
-    }
 
-    private IEnumerator AttackTick()
-    {
-        _readyForHit = false;
-        yield return new WaitForSeconds(_attackSpeed);
-        if (_receivedDamage && !_canHit)
-        {
-            _receivedDamage = false;
-            _attacking = false;
-            _readyForHit = true;
-            Debug.Log("залочили сууки");
-            yield break;
-        }
-        _animator.SetTrigger("Attack");
-        _enemyWarrior.TakePhysicalHit(_thisWarrior.Strength);
-        _readyForHit = true;
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Warrior>(out Warrior warrior))
         {
-            if (warrior == _enemyWarrior)
+            if (warrior == EnemyWarrior)
             {
                 _canHit = true;
-                _readyForHit = true;
                 _state = AIState.Attack;
             }
         }
@@ -167,18 +163,28 @@ public class WarriorAILogic : MonoBehaviour
     {
         if (collision.TryGetComponent<Warrior>(out Warrior warrior))
         {
-            if (warrior == _enemyWarrior && _enemyWarrior.Health > 0)
+            if (warrior == EnemyWarrior && EnemyWarrior.Health > 0)
             {
-                _canHit = false;
-                _readyForHit = false;
+                _attacking = false;
                 HandleChase();
             }
         }
     }
 
+    private void ForgetEnemy()
+    {
+        if (EnemyWarrior.Health <= 0)
+        {
+            EnemyWarrior = null;
+            _attacking = false;
+            _state = AIState.Patrol;
+        }
+    }
+
     private IEnumerator CheckSurroundingsTick()
     {
-        ScanSurroundings();
+        if (EnemyWarrior == null)
+            ScanSurroundings();
         yield return new WaitForSeconds(0.25f);
         StartCoroutine(CheckSurroundingsTick());
     }
@@ -196,7 +202,8 @@ public class WarriorAILogic : MonoBehaviour
                 if (warriorComponent.Health > 0 && _thisWarrior != warriorComponent && warriorComponent.IsPlayerUnit != _thisWarrior.IsPlayerUnit)
                 {
                     print(warriorComponent);
-                    _enemyWarrior = warriorComponent;
+                    EnemyWarrior = warriorComponent;
+                    EnemyWarrior.OnDeathAction += ForgetEnemy;
                     HandleChase();
                 }
             }
@@ -208,14 +215,7 @@ public class WarriorAILogic : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, _enemyCheckRadius);
     }
-
-
-
-
 }
-
-
-
 
 
 public enum AIState
