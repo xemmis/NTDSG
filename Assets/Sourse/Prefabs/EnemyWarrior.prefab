@@ -99,13 +99,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 354112282312290670}
-  - component: {fileID: 3933887489685699599}
   - component: {fileID: 4655041609723152152}
   - component: {fileID: 1640620075228796562}
   - component: {fileID: 5249002539225155734}
-  - component: {fileID: 7962438629189410979}
+  - component: {fileID: -7339630595068684688}
+  - component: {fileID: -7658360706423373132}
+  - component: {fileID: 7711847544565934365}
   m_Layer: 0
-  m_Name: LightBandit
+  m_Name: EnemyWarrior
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,27 +121,13 @@ Transform:
   m_GameObject: {fileID: 8786796092878713900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.32866442, y: -2.2897272, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7837615375824985417}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3933887489685699599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8786796092878713900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba8b435a8dc3f604e9a13c4acd7081c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_speed: 4
-  m_jumpForce: 7.5
 --- !u!95 &4655041609723152152
 Animator:
   serializedVersion: 5
@@ -241,8 +228,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &7962438629189410979
-BoxCollider2D:
+--- !u!58 &-7339630595068684688
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -273,16 +260,52 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02, y: 0.662}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.5, y: 1.5}
-    newSize: {x: 1.28, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: 0.75}
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 1.2}
-  m_EdgeRadius: 0
+  m_Radius: 0.75
+--- !u!114 &-7658360706423373132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8786796092878713900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6deaa01880721e439a6b8aa2cf28ec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stunned: 0
+  _attacking: 0
+  _movementSpeed: 5
+  _attackSpeed: 0
+  _enemyCheckRadius: 5
+  _attackRange: 1.5
+  _animState: 0
+  _currentPatrolIndex: 0
+  <EnemyWarrior>k__BackingField: {fileID: 0}
+  _patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &7711847544565934365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8786796092878713900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7f53635a084db44ab9615d61255dc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Health>k__BackingField: 0
+  <Dexterity>k__BackingField: 0
+  <Strength>k__BackingField: 0
+  <Armor>k__BackingField: 0
+  <IsPlayerUnit>k__BackingField: 0
+  _animator: {fileID: 0}
+  _rigidbody2D: {fileID: 0}
+  _stunPercents: 0
+  MaxArmor: 15
+  _checkSurroudingsTick: 0.25

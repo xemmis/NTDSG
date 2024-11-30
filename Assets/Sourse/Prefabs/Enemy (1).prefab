@@ -156,6 +156,7 @@ MonoBehaviour:
   <IsPlayerUnit>k__BackingField: 0
   _animator: {fileID: 0}
   _rigidbody2D: {fileID: 0}
+  _stunPercents: 0
   MaxArmor: 15
   _checkSurroudingsTick: 0.25
 --- !u!58 &8595559519971002346
@@ -192,7 +193,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.75}
   serializedVersion: 2
-  m_Radius: 1.25
+  m_Radius: 0.7
 --- !u!114 &8404097017388371363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,12 +206,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6deaa01880721e439a6b8aa2cf28ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stunned: 0
   _attacking: 0
   _movementSpeed: 5
   _attackSpeed: 0
   _enemyCheckRadius: 5
+  _attackRange: 1.5
   _animState: 0
   _currentPatrolIndex: 0
   <EnemyWarrior>k__BackingField: {fileID: 0}
   _patrolPoints: []
-  _protectPosition: {fileID: 0}

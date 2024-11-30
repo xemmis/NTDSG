@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
@@ -9,46 +8,36 @@ public class WarriorAILogic : MonoBehaviour
     private CircleCollider2D _circleCollider;
 
     private Warrior _thisWarrior;
-    private WarriorFight _warFight;
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
     private AIState _state;
-    private Rigidbody2D _rb;
 
+    [SerializeField] private bool _stunned = false;
     [SerializeField] private bool _attacking;
-    [SerializeField] private bool _canHit;
-
     [SerializeField] private float _movementSpeed = 5f;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _enemyCheckRadius = 5f;
+    [SerializeField] private float _attackRange = 1.5f;
     [SerializeField] private int _animState;
     [SerializeField] private int _currentPatrolIndex = 0;
     [field: SerializeField] public Warrior EnemyWarrior { get; private set; }
 
     [SerializeField] private Transform[] _patrolPoints;
-    [SerializeField] private Transform _protectPosition;
-
-    //public Action<bool> OnDistanceToHit;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
-        _circleCollider = GetComponent<CircleCollider2D>();
         _thisWarrior = GetComponent<Warrior>();
-        _warFight = GetComponent<WarriorFight>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
     {
-
-        _circleCollider.isTrigger = true;
+        _attackSpeed = UnityEngine.Random.Range(3, 5);
         _thisWarrior.OnDeathAction += OnDeath;
+        _thisWarrior.OnStunAction += StunLogic;
         _state = AIState.Patrol;
         StartCoroutine(CheckSurroundingsTick());
-    }
-    private void OnDestroy()
-    {
-        _thisWarrior.OnDeathAction -= OnDeath;
     }
 
     private void Update()
@@ -60,17 +49,49 @@ public class WarriorAILogic : MonoBehaviour
                 break;
 
             case AIState.Patrol:
+                _animator.SetInteger("AnimState", 2);
                 HandlePatrol();
                 break;
 
             case AIState.Chase:
+                _animator.SetInteger("AnimState", 2);
                 HandleChase();
                 break;
 
             case AIState.Attack:
+                _animator.SetInteger("AnimState", 1);
                 HandleAttack();
                 break;
+
+            case AIState.Death:
+                OnDeath();
+                break;
+            case AIState.Stunned:
+                if (_stunned)
+                    break;
+                _stunned = true;
+                StartCoroutine(StunDelay());
+                break;
         }
+    }
+    private void Flip(Transform Destination)
+    {
+        if (transform.position.x > Destination.transform.position.x)
+            _spriteRenderer.flipX = false;
+        else
+            _spriteRenderer.flipX = true;
+    }
+    private void StunLogic()
+    {
+        _state = AIState.Stunned;
+    }
+
+    private IEnumerator StunDelay()
+    {
+        yield return new WaitForSeconds(_attackSpeed * 1.5f);
+        _state = AIState.Attack;
+        _stunned = false;
+
     }
 
     private void HandleIdle()
@@ -81,54 +102,41 @@ public class WarriorAILogic : MonoBehaviour
     private void OnDeath()
     {
         StopAllCoroutines();
-        EnemyWarrior = null;
-        _state = AIState.Idle;
-        StartCoroutine(DeathTick());
+        if (EnemyWarrior != null)
+            EnemyWarrior.OnDeathAction -= EnemyDeath;
+
     }
 
-    private IEnumerator DeathTick()
-    {
-        yield return new WaitForSeconds(2f);
-        Destroy(gameObject);
-    }
 
     private void HandleAttack()
     {
-        if (_attacking && !_canHit)
-        {
-            print("atackreturn");
-            return;
-        }
-
-        _attacking = true;
         StartCoroutine(AttackTick());
     }
 
     private IEnumerator AttackTick()
     {
-
-        yield return new WaitForSeconds(_attackSpeed);
-        if (!_attacking && EnemyWarrior.Health <= 0)
+        if (_attacking == true)
         {
             yield break;
-            print("atackbreak");
+
         }
-        print("atackk");
+        _attacking = true;
+        yield return new WaitForSeconds(_attackSpeed);
+        if (EnemyWarrior == null)
+            yield break;
+
         _animator.SetTrigger("Attack");
         EnemyWarrior.TakePhysicalHit(_thisWarrior.Strength);
+
         _attacking = false;
     }
-
-
-
-
-
 
     private void HandlePatrol()
     {
         if (_patrolPoints.Length == 0) return;
         _state = AIState.Patrol;
         Transform targetPoint = _patrolPoints[_currentPatrolIndex];
+        Flip(targetPoint);
         transform.position = Vector2.MoveTowards(transform.position, targetPoint.position, _movementSpeed * Time.deltaTime);
 
         // Проверяем, достигли ли точки патруля
@@ -142,72 +150,68 @@ public class WarriorAILogic : MonoBehaviour
     private void HandleChase()
     {
         _state = AIState.Chase;
+        Flip(EnemyWarrior.transform);
         transform.position = Vector2.MoveTowards(transform.position, EnemyWarrior.transform.position, _movementSpeed * Time.deltaTime);
-
+        if (AttackRangeCheck())
+            _state = AIState.Attack;
     }
 
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<Warrior>(out Warrior warrior))
-        {
-            if (warrior == EnemyWarrior)
-            {
-                _canHit = true;
-                _state = AIState.Attack;
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<Warrior>(out Warrior warrior))
-        {
-            if (warrior == EnemyWarrior && EnemyWarrior.Health > 0)
-            {
-                _attacking = false;
-                HandleChase();
-            }
-        }
-    }
-
-    private void ForgetEnemy()
-    {
-        if (EnemyWarrior.Health <= 0)
-        {
-            EnemyWarrior = null;
-            _attacking = false;
-            _state = AIState.Patrol;
-        }
-    }
 
     private IEnumerator CheckSurroundingsTick()
     {
         if (EnemyWarrior == null)
-            ScanSurroundings();
+        {
+            if (ScanSurroundings(_enemyCheckRadius))
+                _state = AIState.Chase;
+        }
+
         yield return new WaitForSeconds(0.25f);
         StartCoroutine(CheckSurroundingsTick());
     }
-
-    private void ScanSurroundings()
+    private bool AttackRangeCheck()
     {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, _enemyCheckRadius);
+        if (EnemyWarrior == null)
+        {
+            return false;
+        }
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, _attackRange);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject == EnemyWarrior.gameObject)
+            {
+                return true;
+            }
+        }
+        _state = AIState.Chase;
+        return false;
+
+    }
+
+    private void EnemyDeath()
+    {
+        EnemyWarrior.OnDeathAction -= EnemyDeath;
+        EnemyWarrior = null;
+        if (ScanSurroundings(_enemyCheckRadius))
+            _state = AIState.Chase;
+        else
+            _state = AIState.Patrol;
+    }
+
+    private bool ScanSurroundings(float radius)
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, radius);
 
         foreach (var hitCollider in hitColliders)
         {
             GameObject obj = hitCollider.gameObject;
-
-            if (obj.TryGetComponent<Warrior>(out Warrior warriorComponent))
+            if (obj.TryGetComponent<Warrior>(out Warrior warriorComponent) && warriorComponent.Health > 0 && _thisWarrior != warriorComponent && warriorComponent.IsPlayerUnit != _thisWarrior.IsPlayerUnit)
             {
-                if (warriorComponent.Health > 0 && _thisWarrior != warriorComponent && warriorComponent.IsPlayerUnit != _thisWarrior.IsPlayerUnit)
-                {
-                    print(warriorComponent);
-                    EnemyWarrior = warriorComponent;
-                    EnemyWarrior.OnDeathAction += ForgetEnemy;
-                    HandleChase();
-                }
+                EnemyWarrior = warriorComponent;
+                EnemyWarrior.OnDeathAction += EnemyDeath;
+                return true;
             }
         }
+        return false;
     }
 
     private void OnDrawGizmosSelected()
@@ -224,6 +228,8 @@ public enum AIState
     Patrol,     // Патрулирование
     Chase,      // Преследование
     Attack,     // Атака
+    Death,
+    Stunned,
 }
 
 

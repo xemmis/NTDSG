@@ -13,11 +13,12 @@ public class Warrior : MonoBehaviour
 
     [SerializeField] private Animator _animator;
     [SerializeField] private Rigidbody2D _rigidbody2D;
+    [SerializeField] private float _stunPercents;
     [SerializeField] private int MaxArmor = 15;
     [SerializeField] private float _checkSurroudingsTick = .25f;
 
     public Action OnDeathAction;
-    public Action <bool> OnHitAction;
+    public Action OnStunAction;
 
 
     private void Awake()
@@ -28,45 +29,52 @@ public class Warrior : MonoBehaviour
 
     private void Start()
     {
+        Health = UnityEngine.Random.Range(35, 55);
         Dexterity = UnityEngine.Random.Range(0, 16);
         Strength = UnityEngine.Random.Range(5, 16);
         Armor = UnityEngine.Random.Range(5, 16);
         _rigidbody2D.gravityScale = 0;
-    }    
+    }
+
     private void OnDeath()
     {
         if (Health <= 0)
             OnDeathAction?.Invoke();
-        _animator.SetTrigger("Death");
+
     }
-  
+
     private void TakeHitAnimation()
     {
-        if (Health < 37)
-            OnHitAction?.Invoke(true);
-        _animator.SetTrigger("Hurt");
-    }  
+        if (_stunPercents >= 100)
+        {
+            OnStunAction?.Invoke();
+            _stunPercents = 0;
+            _animator.SetTrigger("Stunned");
+        }
+        else
+            _animator.SetTrigger("Hurt");
+    }
 
     private void CheckHealth()
     {
         if (Health > 0)
             return;
         OnDeath();
+        _animator.SetTrigger("Death");
     }
 
     public virtual void TakePureHit(int Damage)
     {
         Health -= Damage;
         TakeHitAnimation();
-        CheckHealth();
     }
 
     public virtual void TakePhysicalHit(int Damage)
     {
         if (IsMissed(Dexterity))
             return;
+        _stunPercents += Damage * 1.5f;
         Health -= CalculateDamage(Damage);
-        CheckHealth();
         TakeHitAnimation();
     }
 
@@ -97,6 +105,6 @@ public class Warrior : MonoBehaviour
         return UnityEngine.Random.value <= missChance;
     }
 
- 
+
 }
 
