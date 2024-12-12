@@ -6,6 +6,7 @@ using UnityEngine;
 public class Warrior : MonoBehaviour
 {
     [field: SerializeField] public float Health { get; private set; }
+    [field: SerializeField] public float MaxHealth { get; private set; }
     [field: SerializeField] public int Dexterity { get; private set; }
     [field: SerializeField] public int Strength { get; private set; }
     [field: SerializeField] public int Armor { get; private set; }
@@ -19,7 +20,7 @@ public class Warrior : MonoBehaviour
 
     public Action OnDeathAction;
     public Action OnStunAction;
-
+    public Action OnHitAction;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class Warrior : MonoBehaviour
     private void Start()
     {
         Health = UnityEngine.Random.Range(35, 55);
+        MaxHealth = Health;
         Dexterity = UnityEngine.Random.Range(0, 16);
         Strength = UnityEngine.Random.Range(5, 16);
         Armor = UnityEngine.Random.Range(5, 16);
@@ -48,11 +50,15 @@ public class Warrior : MonoBehaviour
         if (_stunPercents >= 100)
         {
             OnStunAction?.Invoke();
+            OnHitAction?.Invoke();
             _stunPercents = 0;
             _animator.SetTrigger("Stunned");
         }
         else
+        {
+            OnHitAction?.Invoke();
             _animator.SetTrigger("Hurt");
+        }
     }
 
     private void CheckHealth()

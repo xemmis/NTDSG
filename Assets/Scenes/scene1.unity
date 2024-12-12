@@ -453,7 +453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 354112282312290670, guid: af6c883dacf13e9469cb21f872c7d93f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.2387667
+      value: -0.92
       objectReference: {fileID: 0}
     - target: {fileID: 354112282312290670, guid: af6c883dacf13e9469cb21f872c7d93f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -486,6 +486,10 @@ PrefabInstance:
     - target: {fileID: 354112282312290670, guid: af6c883dacf13e9469cb21f872c7d93f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640620075228796562, guid: af6c883dacf13e9469cb21f872c7d93f, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8786796092878713900, guid: af6c883dacf13e9469cb21f872c7d93f, type: 3}
       propertyPath: m_Name
@@ -581,7 +585,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213008996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -4.02, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -974,7 +978,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.015686275}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1601,7 +1605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4371565918548425790, guid: 4b6d794e8a762294bb814a8d9080f12e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.16
+      value: -1.09
       objectReference: {fileID: 0}
     - target: {fileID: 4371565918548425790, guid: 4b6d794e8a762294bb814a8d9080f12e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1693,7 +1697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8444713861763187049, guid: 4b6d794e8a762294bb814a8d9080f12e, type: 3}
       propertyPath: <Health>k__BackingField
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8444713861763187049, guid: 4b6d794e8a762294bb814a8d9080f12e, type: 3}
       propertyPath: <Strength>k__BackingField
