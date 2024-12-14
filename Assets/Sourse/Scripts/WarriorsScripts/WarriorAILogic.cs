@@ -5,21 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class WarriorAILogic : MonoBehaviour
 {
-    private CircleCollider2D _circleCollider;
-
     private Warrior _thisWarrior;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-    private AIState _state;
+    [SerializeField] private AIState _state;
 
     [SerializeField] private bool _stunned = false;
     [SerializeField] private bool _attacking;
-    [SerializeField] private float _movementSpeed = 5f;
-    [SerializeField] private float _attackSpeed;
-    [SerializeField] private float _enemyCheckRadius = 5f;
-    [SerializeField] private float _attackRange = 1.5f;
-    [SerializeField] private int _animState;
-    [SerializeField] private int _currentPatrolIndex = 0;
+    private float _movementSpeed = 5f;
+    private float _attackSpeed;
+    private float _enemyCheckRadius = 5f;
+    private float _attackRange = 1.5f;
+    private int _currentPatrolIndex = 0;
     [field: SerializeField] public Warrior EnemyWarrior { get; private set; }
 
     [SerializeField] private Transform[] _patrolPoints;
@@ -74,6 +71,26 @@ public class WarriorAILogic : MonoBehaviour
                 break;
         }
     }
+
+    public void GetPatrolPoints(Transform[] points)
+    {
+        for (int i = 0; i < points.Length; i++)
+        {
+            _patrolPoints[i] = points[i];
+        }
+    }
+    public void GetPatrolPoints(Transform points)
+    {
+        if (_patrolPoints.Length > 1)
+        {
+            Transform[] _newPatrolPoints = new Transform[1];
+            _patrolPoints = _newPatrolPoints;
+            _patrolPoints[1] = points;
+        }
+        else
+            _patrolPoints[1] = points;
+    }
+
     private void Flip(Transform Destination)
     {
         if (transform.position.x > Destination.transform.position.x)
@@ -110,6 +127,10 @@ public class WarriorAILogic : MonoBehaviour
 
     private void HandleAttack()
     {
+        if (EnemyWarrior == null)
+        {
+            _state = AIState.Patrol;
+        }
         StartCoroutine(AttackTick());
     }
 
@@ -123,12 +144,16 @@ public class WarriorAILogic : MonoBehaviour
         _attacking = true;
         yield return new WaitForSeconds(_attackSpeed);
         if (EnemyWarrior == null)
+        {
+            _attacking = false;
             yield break;
+
+        }
 
         _animator.SetTrigger("Attack");
         EnemyWarrior.TakePhysicalHit(_thisWarrior.Strength);
-
         _attacking = false;
+
     }
 
     private void HandlePatrol()

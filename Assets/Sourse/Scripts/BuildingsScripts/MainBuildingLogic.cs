@@ -32,7 +32,7 @@ public class MainBuildingLogic : MonoBehaviour
 
     public bool CheckCostToWallet(Wallet wallet)
     {         
-        return wallet.CheckBuildingCost(Build.BuildCost); 
+        return wallet.CheckCost(Build.BuildCost); 
     }
 
     public void HandleEnter(Collider2D collision)

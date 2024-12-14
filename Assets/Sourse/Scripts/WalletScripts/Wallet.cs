@@ -1,17 +1,18 @@
+using System;
 using UnityEngine;
 
 public class Wallet : MonoBehaviour
 {
     [field: SerializeField] public int Money { get; private set; }
-
+    public Action ChangeMoneyAction;
     public void SpendMoney(int cost)
     {
-        if (CheckBuildingCost(cost))
+        if (CheckCost(cost))
             Money -= cost;
-        print(Money);
+        ChangeMoneyAction?.Invoke();
     }
 
-    public bool CheckBuildingCost(int cost)
+    public bool CheckCost(int cost)
     {
         if (Money < cost)
             return false;
@@ -21,6 +22,6 @@ public class Wallet : MonoBehaviour
     public void EarnMoney(int EarnedMoney)
     {
         Money += EarnedMoney;
-        print(Money);
+        ChangeMoneyAction?.Invoke();        
     }
 }

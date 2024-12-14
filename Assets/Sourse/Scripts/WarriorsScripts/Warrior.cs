@@ -6,17 +6,34 @@ using UnityEngine;
 public class Warrior : MonoBehaviour
 {
     [field: SerializeField] public float Health { get; private set; }
-    [field: SerializeField] public float MaxHealth { get; private set; }
-    [field: SerializeField] public int Dexterity { get; private set; }
-    [field: SerializeField] public int Strength { get; private set; }
-    [field: SerializeField] public int Armor { get; private set; }
-    [field: SerializeField] public bool IsPlayerUnit { get; private set; }
+    public bool IsPlayerUnit;
+    public float MaxHealth { get; private set; }
+    public int Dexterity { get; private set; }
+    public int Strength { get; private set; }
+    public int Armor { get; private set; }
+    [Header("Здоровье")]
+    [Space(20)]
+    [Header("Минимальное и максимальное значение здоровья")]
+    [SerializeField] private int _minHealthRand;
+    [SerializeField] private int _maxHealthRand;
+    [Header("Минимальное и максимальное значение силы")]
+    [SerializeField] private int _minStrRand;
+    [SerializeField] private int _maxStrRand;
+    [Header("Минимальное и максимальное значение брони")]
+    [SerializeField] private int _minArmRand;
+    [SerializeField] private int _maxArmRand;
+    [Header("Минимальное и максимальное значение Ловкости")]
+    [SerializeField] private int _minDextRand;
+    [SerializeField] private int _maxDextRand;
 
-    [SerializeField] private Animator _animator;
-    [SerializeField] private Rigidbody2D _rigidbody2D;
-    [SerializeField] private float _stunPercents;
-    [SerializeField] private int MaxArmor = 15;
-    [SerializeField] private float _checkSurroudingsTick = .25f;
+
+
+
+    private Animator _animator;
+    private Rigidbody2D _rigidbody2D;
+    private float _stunPercents;
+    private float _stunResistance;
+    private int MaxArmor = 15;
 
     public Action OnDeathAction;
     public Action OnStunAction;
@@ -30,12 +47,13 @@ public class Warrior : MonoBehaviour
 
     private void Start()
     {
-        Health = UnityEngine.Random.Range(35, 55);
+        Health = UnityEngine.Random.Range(_minHealthRand, _maxHealthRand);
         MaxHealth = Health;
-        Dexterity = UnityEngine.Random.Range(0, 16);
-        Strength = UnityEngine.Random.Range(5, 16);
-        Armor = UnityEngine.Random.Range(5, 16);
+        Dexterity = UnityEngine.Random.Range(_minDextRand, _maxDextRand);
+        Strength = UnityEngine.Random.Range(_minStrRand, _maxStrRand);
+        Armor = UnityEngine.Random.Range(_minArmRand, _maxArmRand);
         _rigidbody2D.gravityScale = 0;
+        _stunResistance = Strength * 1.5f;
     }
 
     private void OnDeath()
@@ -47,7 +65,7 @@ public class Warrior : MonoBehaviour
 
     private void TakeHitAnimation()
     {
-        if (_stunPercents >= 100)
+        if (_stunPercents >= _stunResistance)
         {
             OnStunAction?.Invoke();
             OnHitAction?.Invoke();
