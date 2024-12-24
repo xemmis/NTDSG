@@ -31,7 +31,6 @@ public class WarriorSpawner : MonoBehaviour
             BaseAILogic WarriorAI = WarriorObject.GetComponent<BaseAILogic>();
             Warrior WarriorComponent = WarriorObject.GetComponent<Warrior>();
             WarriorComponent.IsPlayerUnit = true;
-            WarriorAI.GetPatrolPoints(_patrolPoints);
 
         }
 
