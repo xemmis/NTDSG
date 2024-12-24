@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor.Playables;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -26,17 +27,24 @@ public class Warrior : MonoBehaviour
     [SerializeField] private int _minDextRand;
     [SerializeField] private int _maxDextRand;
 
-
-
+    [Header("Остальные аттрибуты")]
+    [SerializeField] private float _movementSpeed;
+    [SerializeField] private float _attackSpeed;
+    [SerializeField] private float _attackRange;
+    [SerializeField] private float _enemyCheckRadius;
+    [Space(20)]
+    [Header("Прирост за еденицу ловкости")]
+    [SerializeField] private float attackSpeedModifier = 0.05f; // Прирост скорости атаки за 1 ловкость
+    [SerializeField] private float movementSpeedModifier = 0.1f; // Прирост скорости передвижения за 1 ловкость
+    [Header("Базовая скорость")]
+    [Space(20)]
+    [SerializeField] private float _baseAttackSpeed = 1f; // Базовая скорость атаки
+    [SerializeField] private float _baseMovementSpeed = 5f; // Базовая скорость передвижения
 
     private Animator _animator;
     private Rigidbody2D _rigidbody2D;
-    private float _stunPercents;
-    private float _stunResistance;
-    private int MaxArmor = 15;
 
     public Action OnDeathAction;
-    public Action OnStunAction;
     public Action OnHitAction;
 
     private void Awake()
@@ -48,43 +56,28 @@ public class Warrior : MonoBehaviour
     private void Start()
     {
         Health = UnityEngine.Random.Range(_minHealthRand, _maxHealthRand);
-        MaxHealth = Health;
         Dexterity = UnityEngine.Random.Range(_minDextRand, _maxDextRand);
         Strength = UnityEngine.Random.Range(_minStrRand, _maxStrRand);
         Armor = UnityEngine.Random.Range(_minArmRand, _maxArmRand);
+        MaxHealth = Health;
         _rigidbody2D.gravityScale = 0;
-        _stunResistance = Strength * 1.5f;
+        _attackSpeed = _baseMovementSpeed + (Dexterity * movementSpeedModifier);
+        _movementSpeed = _baseAttackSpeed + (Dexterity * attackSpeedModifier);        
     }
-
-    private void OnDeath()
-    {
-        if (Health <= 0)
-            OnDeathAction?.Invoke();
-
-    }
-
     private void TakeHitAnimation()
     {
-        if (_stunPercents >= _stunResistance)
-        {
-            OnStunAction?.Invoke();
-            OnHitAction?.Invoke();
-            _stunPercents = 0;
-            _animator.SetTrigger("Stunned");
-        }
-        else
-        {
-            OnHitAction?.Invoke();
-            _animator.SetTrigger("Hurt");
-        }
+
+        OnHitAction?.Invoke();
+        _animator.SetTrigger("Hurt");
+
     }
 
     private void CheckHealth()
     {
         if (Health > 0)
             return;
-        OnDeath();
-        _animator.SetTrigger("Death");
+        OnDeathAction?.Invoke();
+        _animator.SetTrigger("Die");
     }
 
     public virtual void TakePureHit(int Damage)
@@ -95,40 +88,23 @@ public class Warrior : MonoBehaviour
 
     public virtual void TakePhysicalHit(int Damage)
     {
-        if (IsMissed(Dexterity))
-            return;
-        _stunPercents += Damage * 1.5f;
         Health -= CalculateDamage(Damage);
         TakeHitAnimation();
+        if (Health <= 0)
+        {
+            OnDeathAction?.Invoke();
+        }
     }
 
     private protected float CalculateDamage(float damage)
     {
         // Вычисляем процент урона, который пройдет через броню
-        float damageReduction = (Armor / MaxArmor) * 0.45f; // Уменьшение урона от брони (0% до 45%)
+        float damageReduction = (Armor / _maxArmRand) * 0.45f; // Уменьшение урона от брони (0% до 45%)
 
 
         float damageTaken = damage * (1 - damageReduction);
 
         return damageTaken;
-    }
-
-    private protected bool IsMissed(float dexterity)
-    {
-        float maxMissChance = 0.25f; // 25%
-        float minMissChance = 0.05f; // 5%
-        float maxDexterity = 15f;
-
-        // Вычисляем шанс промаха по формуле
-        float missChance = maxMissChance - (maxMissChance - minMissChance) * (dexterity / maxDexterity);
-
-        // Ограничиваем значение от 5% до 25%
-        missChance = Mathf.Clamp(missChance, minMissChance, maxMissChance);
-
-        // Генерируем случайное число от 0 до 1 и проверяем, произошёл ли промах
-        return UnityEngine.Random.value <= missChance;
-    }
-
-
+    }  
 }
 
