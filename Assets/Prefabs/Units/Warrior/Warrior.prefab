@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4345571254252208936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6050503197842202532}
+  m_Layer: 0
+  m_Name: TargetPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6050503197842202532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4345571254252208936}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2362072993690851166}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8467645611199162757
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,9 +43,10 @@ GameObject:
   - component: {fileID: 3315519869066276018}
   - component: {fileID: 1231495301424697536}
   - component: {fileID: 1288276493484379912}
-  - component: {fileID: 1496648350232040022}
   - component: {fileID: 3293071899130776760}
   - component: {fileID: 7485577339089782930}
+  - component: {fileID: 754964418073296601}
+  - component: {fileID: 8331036071975480649}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Untagged
@@ -31,9 +63,10 @@ Transform:
   m_GameObject: {fileID: 8467645611199162757}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.48, y: 0.38, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 6050503197842202532}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -77,7 +110,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: f6cc22f333d8fb1468f6a167ccb72770, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -137,7 +170,76 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &1496648350232040022
+--- !u!114 &3293071899130776760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8467645611199162757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde3a318214da1145b97f287a460fe38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Health>k__BackingField: 0
+  IsPlayerUnit: 0
+  _minHealthRand: 20
+  _maxHealthRand: 47
+  _minStrRand: 4
+  _maxStrRand: 6
+  _minArmRand: 4
+  _maxArmRand: 9
+  _minDextRand: 1
+  _maxDextRand: 6
+  HireShower: {fileID: 0}
+  MovementSpeed: 0
+  AttackSpeed: 0
+  AttackRange: 2
+  EnemyCheckRadius: 5
+  attackSpeedModifier: 0.25
+  movementSpeedModifier: 0.35
+  _baseAttackSpeed: 10
+  _baseMovementSpeed: 1
+--- !u!114 &7485577339089782930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8467645611199162757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9160f1bca03015428d1e38ac94e0aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _state: 0
+  _isChilled: 0
+  _attacking: 0
+  _destination: {fileID: 0}
+  _rayDistance: 2
+  _isHitted: 0
+  avoidDistance: 1
+  _rayAngle: 70
+  <EnemyWarrior>k__BackingField: {fileID: 0}
+  _target: {fileID: 6050503197842202532}
+  _pcInput: {fileID: 0}
+--- !u!114 &754964418073296601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8467645611199162757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f5df9f5c1a2b3a43b8aabf7a8718297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiPosition: {fileID: 0}
+  _uiPrefab: {fileID: 3735127031417648949, guid: c45471c16bab49c4c99fbbfcc55d2102, type: 3}
+  _instantiatedUi: {fileID: 0}
+--- !u!58 &8331036071975480649
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,56 +268,9 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.009926856, y: -0.33627856}
+  m_Offset: {x: 0, y: -0.46911463}
   serializedVersion: 2
-  m_Radius: 0.1393038
---- !u!114 &3293071899130776760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8467645611199162757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fde3a318214da1145b97f287a460fe38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Health>k__BackingField: 0
-  IsPlayerUnit: 0
-  _minHealthRand: 20
-  _maxHealthRand: 37
-  _minStrRand: 3
-  _maxStrRand: 11
-  _minArmRand: 3
-  _maxArmRand: 6
-  _minDextRand: 2
-  _maxDextRand: 9
-  MovementSpeed: 0
-  AttackSpeed: 0
-  AttackRange: 0
-  EnemyCheckRadius: 0
-  attackSpeedModifier: 0.75
-  movementSpeedModifier: 0.5
-  _baseAttackSpeed: 1
-  _baseMovementSpeed: 5
---- !u!114 &7485577339089782930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8467645611199162757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9160f1bca03015428d1e38ac94e0aff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _state: 0
-  _isChilled: 0
-  _attacking: 0
-  <EnemyWarrior>k__BackingField: {fileID: 0}
-  _patrolPoints: []
+  m_Radius: 0.07757816

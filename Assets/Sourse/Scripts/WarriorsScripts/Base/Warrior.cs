@@ -12,6 +12,7 @@ public class Warrior : MonoBehaviour
     public int Dexterity { get; private set; }
     public int Strength { get; private set; }
     public int Armor { get; private set; }
+
     [Header("Здоровье")]
     [Space(20)]
     [Header("Минимальное и максимальное значение здоровья")]
@@ -28,6 +29,7 @@ public class Warrior : MonoBehaviour
     [SerializeField] private int _maxDextRand;
 
     [Header("Остальные аттрибуты")]
+    public HireShower HireShower;
     public float MovementSpeed;
     public float AttackSpeed;
     public float AttackRange;
@@ -49,6 +51,7 @@ public class Warrior : MonoBehaviour
 
     private void Awake()
     {
+        HireShower= GetComponent<HireShower>();  
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
@@ -94,6 +97,7 @@ public class Warrior : MonoBehaviour
             OnDeathAction?.Invoke();
         }
     }
+    
 
     private protected float CalculateDamage(float damage)
     {

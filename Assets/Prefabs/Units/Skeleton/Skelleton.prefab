@@ -31,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 4419177784894301214}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.521, y: 3.533, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -159,6 +159,7 @@ MonoBehaviour:
   _maxArmRand: 3
   _minDextRand: 0
   _maxDextRand: 5
+  HireShower: {fileID: 0}
   MovementSpeed: 0
   AttackSpeed: 0
   AttackRange: 0
@@ -167,6 +168,9 @@ MonoBehaviour:
   movementSpeedModifier: 0.35
   _baseAttackSpeed: 1
   _baseMovementSpeed: 5
+  _minEarnings: 0
+  _maxEarnings: 0
+  _navBar: {fileID: 0}
 --- !u!114 &8418718890497016598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +186,11 @@ MonoBehaviour:
   _state: 0
   _isChilled: 0
   _attacking: 0
+  _destination: {fileID: 0}
+  _rayDistance: 2
+  _isHitted: 0
+  avoidDistance: 2
+  _rayAngle: 80
   <EnemyWarrior>k__BackingField: {fileID: 0}
 --- !u!58 &1345504529272297653
 CircleCollider2D:
@@ -212,9 +221,9 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.19572091}
+  m_Offset: {x: 0, y: -0.4758364}
   serializedVersion: 2
-  m_Radius: 0.08230281
+  m_Radius: 0.24671856
