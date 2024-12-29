@@ -4,6 +4,7 @@ using UnityEngine;
 public class Wallet : MonoBehaviour
 {
     [field: SerializeField] public int Money { get; private set; }
+
     public Action ChangeMoneyAction;
     public void SpendMoney(int cost)
     {

@@ -13,26 +13,16 @@ public class Skeleton : Warrior, IsInteractable
 
     public void Interact()
     {
-        if (Health > 0 || _isInteracted)
+        if (Health > 0 || _isInteracted || !CanInteract)
+        {
+            print("Return");
             return;
+        }
         _isInteracted = true;
         _earnings = Random.Range(_minEarnings, _maxEarnings);
         _navBar.Wallet.EarnMoney(_earnings);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<PcInput>(out PcInput pcInput))
-        {
-            CanInteract = true;
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<PcInput>(out PcInput pcInput))
-        {
-            CanInteract = false;
-        }
+        
+        print("ne return" + _earnings);
     }
 
     public override void TakeHitAnimation()

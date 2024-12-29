@@ -92,13 +92,14 @@ public class PcInput : Warrior
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<UnitDealer>(out UnitDealer component))
+        if (collision.TryGetComponent<UnitDealer>(out UnitDealer unitDealer))
         {
-            component.CanInteract = true;
-            _interactableObject = component.gameObject;
+            unitDealer.CanInteract = true;
+            _interactableObject = unitDealer.gameObject;
         }
         if (collision.TryGetComponent<Skeleton>(out Skeleton skeleton))
         {
+            skeleton.CanInteract = true;
             _interactableObject = skeleton.gameObject;
         }
     }
