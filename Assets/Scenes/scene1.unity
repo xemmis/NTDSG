@@ -1352,11 +1352,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemies:
-  - {fileID: 6938731781552510256, guid: b19bfea5603d99046ba841eaa85ad953, type: 3}
-  - {fileID: 2572579684905520534, guid: eee7879c6be67904683010700e7d5a6b, type: 3}
+  - {fileID: 187649308824384997, guid: fb458ecdcc6b30f45b09ad51d59e182a, type: 3}
+  - {fileID: 8117308848850745504, guid: 7b38135d24e8b484aba1ae589190cd02, type: 3}
   _Currentenemies: []
+  _navigationBar: {fileID: 1955437560}
   _index: 0
-  _currentindex: 0
   _points:
   - {fileID: 2067060644}
   - {fileID: 1338946430}

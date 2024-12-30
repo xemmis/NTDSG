@@ -143,7 +143,7 @@ public class BaseAILogic : MonoBehaviour
         _isHitted = true;
     }
 
-public virtual void HandleIdle()
+    public virtual void HandleIdle()
     {
         ChangeAnimState(3);
     }
@@ -158,11 +158,15 @@ public virtual void HandleIdle()
 
     public virtual void HandleChase()
     {
+        if (EnemyWarrior == null)
+            return;
+
         Flip(EnemyWarrior.transform);
         StopAllCoroutines();
         _attacking = false;
         _destination = EnemyWarrior.transform;
         MoveTowardsTarget();
+
     }
 
     public virtual void HandleAttack()

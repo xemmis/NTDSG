@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class Skeleton : Warrior, IsEnemy
-{    
+{
     [field: SerializeField] public float SpawnPersents { get; set; }
     [SerializeField] public NavigationBar NavBar;
 
@@ -13,16 +13,29 @@ public class Skeleton : Warrior, IsEnemy
     [SerializeField] private int _maxEarnings;
 
 
-    public override void CheckHealth()
+    public void ChangeObject()
     {
-        base.CheckHealth();
+        _transform.position = transform.position;
         SkeletonBones Bones = Instantiate(_bonesPrefab, _transform);
+        Bones.transform.position = new Vector3(
+        Bones.transform.position.x,
+        Bones.transform.position.y,
+        Random.Range(1.0009f, 2.009f)
+    
+        );
+        SpriteRenderer spriteRenderer = Bones.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingOrder = 2;
+        }
         Bones.NavigationBar = NavBar;
         Bones.MinEarnings = _minEarnings;
-        Bones.MaxEarnings = _maxEarnings;        
+        Bones.MaxEarnings = _maxEarnings;
         Destroy(_logic);
-        Destroy(this);
+        Destroy(this.gameObject);
+
     }
+
 
     public override void TakeHitAnimation()
     {

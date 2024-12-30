@@ -19,7 +19,7 @@ public class SkeletonBones : MonoBehaviour, IsInteractable
         _isInteracted = true;
         _earnings = Random.Range(MinEarnings, MaxEarnings);
         NavigationBar.Wallet.EarnMoney(_earnings);
-        print("ne return" + _earnings);
+        Destroy(gameObject);
 
     }
 }
