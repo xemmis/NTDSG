@@ -97,7 +97,7 @@ public class PcInput : Warrior
             unitDealer.CanInteract = true;
             _interactableObject = unitDealer.gameObject;
         }
-        if (collision.TryGetComponent<Skeleton>(out Skeleton skeleton))
+        if (collision.TryGetComponent<SkeletonBones>(out SkeletonBones skeleton))
         {
             skeleton.CanInteract = true;
             _interactableObject = skeleton.gameObject;

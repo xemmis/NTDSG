@@ -63,7 +63,6 @@ public class Warrior : MonoBehaviour
         Strength = UnityEngine.Random.Range(_minStrRand, _maxStrRand);
         Armor = UnityEngine.Random.Range(_minArmRand, _maxArmRand);
         MaxHealth = Health;
-        _rigidbody2D.gravityScale = 0;
         AttackSpeed = _baseAttackSpeed / (1 + Dexterity * attackSpeedModifier);
         MovementSpeed = _baseMovementSpeed + (Dexterity * movementSpeedModifier);
     }
@@ -74,7 +73,7 @@ public class Warrior : MonoBehaviour
         _animator.SetTrigger("Hurt");
     }
 
-    protected void CheckHealth()
+    public virtual void CheckHealth()
     {
         if (Health > 0)
             return;

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4419177784894301214
+--- !u!1 &27697038488505858
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7490839642308099105}
-  - component: {fileID: 14144100811322939}
-  - component: {fileID: 7108110166238826220}
-  - component: {fileID: 4985989950105694200}
-  - component: {fileID: 6938731781552510256}
-  - component: {fileID: 8418718890497016598}
-  - component: {fileID: 1345504529272297653}
+  - component: {fileID: 658870377347293415}
+  - component: {fileID: 5572542125610107169}
+  - component: {fileID: 7767008424582784252}
+  - component: {fileID: 2115181583675788759}
+  - component: {fileID: 5076536932916491602}
+  - component: {fileID: 8279881099241447816}
+  - component: {fileID: 8703966211888462640}
   m_Layer: 0
-  m_Name: Skelleton
+  m_Name: SkelletonBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7490839642308099105
+--- !u!4 &658870377347293415
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419177784894301214}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.521, y: 3.533, z: 0}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_GameObject: {fileID: 27697038488505858}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.35, y: 3.35, z: 3.35}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Father: {fileID: 2598737875827350582}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &14144100811322939
+--- !u!212 &5572542125610107169
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419177784894301214}
+  m_GameObject: {fileID: 27697038488505858}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -89,14 +89,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &7108110166238826220
+--- !u!95 &7767008424582784252
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419177784894301214}
+  m_GameObject: {fileID: 27697038488505858}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 90dbde214912b9443a9d41cd6a8416db, type: 2}
@@ -110,15 +110,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!50 &4985989950105694200
+--- !u!50 &2115181583675788759
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419177784894301214}
-  m_BodyType: 0
+  m_GameObject: {fileID: 27697038488505858}
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -137,47 +137,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6938731781552510256
+--- !u!114 &5076536932916491602
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419177784894301214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab7f53635a084db44ab9615d61255dc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Health>k__BackingField: 0
-  IsPlayerUnit: 0
-  _minHealthRand: 10
-  _maxHealthRand: 25
-  _minStrRand: 1
-  _maxStrRand: 4
-  _minArmRand: 0
-  _maxArmRand: 3
-  _minDextRand: 0
-  _maxDextRand: 5
-  HireShower: {fileID: 0}
-  MovementSpeed: 0
-  AttackSpeed: 0
-  AttackRange: 0
-  EnemyCheckRadius: 0
-  attackSpeedModifier: 0.25
-  movementSpeedModifier: 0.35
-  _baseAttackSpeed: 1
-  _baseMovementSpeed: 5
-  _minEarnings: 0
-  _maxEarnings: 0
-  _navBar: {fileID: 0}
---- !u!114 &8418718890497016598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419177784894301214}
+  m_GameObject: {fileID: 27697038488505858}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1768f2d8885143846b5aec20148232b5, type: 3}
@@ -192,13 +158,13 @@ MonoBehaviour:
   avoidDistance: 2
   _rayAngle: 80
   <EnemyWarrior>k__BackingField: {fileID: 0}
---- !u!58 &1345504529272297653
+--- !u!58 &8279881099241447816
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419177784894301214}
+  m_GameObject: {fileID: 27697038488505858}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -227,3 +193,73 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.4758364}
   serializedVersion: 2
   m_Radius: 0.24671856
+--- !u!114 &8703966211888462640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27697038488505858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84b72e005e1232348a59d755c5d891c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Health>k__BackingField: 0
+  IsPlayerUnit: 0
+  _minHealthRand: 55
+  _maxHealthRand: 78
+  _minStrRand: 6
+  _maxStrRand: 19
+  _minArmRand: 2
+  _maxArmRand: 8
+  _minDextRand: 1
+  _maxDextRand: 6
+  HireShower: {fileID: 0}
+  MovementSpeed: 0
+  AttackSpeed: 0
+  AttackRange: 3
+  EnemyCheckRadius: 10
+  attackSpeedModifier: 0.5
+  movementSpeedModifier: 0.5
+  _baseAttackSpeed: 13
+  _baseMovementSpeed: 2
+  <SpawnPersents>k__BackingField: 15
+  NavBar: {fileID: 0}
+  _transform: {fileID: 2598737875827350582}
+  _bonesPrefab: {fileID: 2790407052217731747, guid: 285a321311146c341b5a1eca24905d10, type: 3}
+  _logic: {fileID: 5076536932916491602}
+  _minEarnings: 35
+  _maxEarnings: 67
+--- !u!1 &187649308824384997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2598737875827350582}
+  m_Layer: 0
+  m_Name: GiantSkeletonPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2598737875827350582
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187649308824384997}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 658870377347293415}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
