@@ -1,46 +1,25 @@
-﻿using System.ComponentModel;
-using UnityEngine;
+﻿using UnityEngine;
+using Zenject;
 
-public class Skeleton : Warrior, IsEnemy
+public class Skeleton : Warrior, IsEnemy, ISAlive
 {
     [field: SerializeField] public float SpawnPersents { get; set; }
-    [SerializeField] public NavigationBar NavBar;
-
-    [SerializeField] private Transform _transform;
-    [SerializeField] private SkeletonBones _bonesPrefab;
-    [SerializeField] private BaseAILogic _logic;
+    [Inject] public Wallet Wallet;
     [SerializeField] private int _minEarnings;
     [SerializeField] private int _maxEarnings;
-
-
-    public void ChangeObject()
+    [SerializeField] private float _percents;
+    [SerializeField] private float _blockPercents;
+    public override void TakeHit(float Damage)
     {
-        _transform.position = transform.position;
-        SkeletonBones Bones = Instantiate(_bonesPrefab, _transform);
-        Bones.transform.position = new Vector3(
-        Bones.transform.position.x,
-        Bones.transform.position.y,
-        Random.Range(1.0009f, 2.009f)
-    
-        );
-        SpriteRenderer spriteRenderer = Bones.GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
+        _percents = Random.Range(0, 100);
+        if (_percents > _blockPercents)
         {
-            spriteRenderer.sortingOrder = 2;
+            base.TakeHit(Damage);
         }
-        Bones.NavigationBar = NavBar;
-        Bones.MinEarnings = _minEarnings;
-        Bones.MaxEarnings = _maxEarnings;
-        Destroy(_logic);
-        Destroy(this.gameObject);
-
+        else
+        {
+            _animator.SetTrigger("Block");
+            CheckHealth();
+        }
     }
-
-
-    public override void TakeHitAnimation()
-    {
-        CheckHealth();
-        OnHitAction?.Invoke();
-    }
-
 }

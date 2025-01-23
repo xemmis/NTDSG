@@ -4,14 +4,16 @@ using UnityEditor.Playables;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Warrior : MonoBehaviour
+public class Warrior : MonoBehaviour, ISAlive
 {
-    [field: SerializeField] public float Health { get; private set; }
     public bool IsPlayerUnit;
-    public float MaxHealth { get; private set; }
-    public int Dexterity { get; private set; }
-    public int Strength { get; private set; }
-    public int Armor { get; private set; }
+    [field: SerializeField] public float Health { get; set; }
+    [field: SerializeField] public float MaxHealth { get; set; }
+    [field: SerializeField] public int Agility { get; set; }
+    [field: SerializeField] public int Strength { get; set; }
+    [field: SerializeField] public int Armor { get; set; }
+    public Action OnDeathAction { get; set; }
+    public Action OnHitAction { get; set; }
 
     [Header("Здоровье")]
     [Space(20)]
@@ -43,15 +45,14 @@ public class Warrior : MonoBehaviour
     [SerializeField] private float _baseAttackSpeed = 1f; // Базовая скорость атаки
     [SerializeField] private float _baseMovementSpeed = 5f; // Базовая скорость передвижения
 
-    private Animator _animator;
+    private protected Animator _animator;
     private Rigidbody2D _rigidbody2D;
 
-    public Action OnDeathAction;
-    public Action OnHitAction;
+
 
     private void Awake()
     {
-        HireShower= GetComponent<HireShower>();  
+        HireShower = GetComponent<HireShower>();
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
@@ -59,44 +60,22 @@ public class Warrior : MonoBehaviour
     private void Start()
     {
         Health = UnityEngine.Random.Range(_minHealthRand, _maxHealthRand);
-        Dexterity = UnityEngine.Random.Range(_minDextRand, _maxDextRand);
+        Agility = UnityEngine.Random.Range(_minDextRand, _maxDextRand);
         Strength = UnityEngine.Random.Range(_minStrRand, _maxStrRand);
         Armor = UnityEngine.Random.Range(_minArmRand, _maxArmRand);
         MaxHealth = Health;
-        AttackSpeed = _baseAttackSpeed / (1 + Dexterity * attackSpeedModifier);
-        MovementSpeed = _baseMovementSpeed + (Dexterity * movementSpeedModifier);
-    }
-
-    public virtual void TakeHitAnimation()
-    {
-        OnHitAction?.Invoke();
-        _animator.SetTrigger("Hurt");
+        AttackSpeed = _baseAttackSpeed / (1 + Agility * attackSpeedModifier);
+        MovementSpeed = _baseMovementSpeed + (Agility * movementSpeedModifier);
     }
 
     public virtual void CheckHealth()
     {
         if (Health > 0)
             return;
+        _animator.SetTrigger("Death");
         OnDeathAction?.Invoke();
-        _animator.SetTrigger("Die");
     }
 
-    public virtual void TakePureHit(int Damage)
-    {
-        Health -= Damage;
-        TakeHitAnimation();
-    }
-
-    public virtual void TakePhysicalHit(int Damage)
-    {
-        Health -= CalculateDamage(Damage);
-        TakeHitAnimation();
-        if (Health <= 0)
-        {
-            OnDeathAction?.Invoke();
-        }
-    }
-    
 
     private protected float CalculateDamage(float damage)
     {
@@ -109,10 +88,22 @@ public class Warrior : MonoBehaviour
         return damageTaken;
     }
 
-    private void OnDrawGizmosSelected()
+    public virtual void TakeHit(float Damage)
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, EnemyCheckRadius);
+        OnHitAction?.Invoke();
+        _animator.SetTrigger("Hurt");
+        Health -= Damage;
+        CheckHealth();
+    }
+
+    public void Heal(float healAmount)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Death()
+    {
+        throw new NotImplementedException();
     }
 }
 

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _enemies = new List<GameObject>();
     [SerializeField] private List<GameObject> _Currentenemies = new List<GameObject>();
-    [SerializeField] private NavigationBar _navigationBar;
+    [Inject] private Wallet _wallet;
     [SerializeField] private int _index = 0; // Начальное значение
     [SerializeField] private Transform[] _points;
 
@@ -46,7 +47,7 @@ public class EnemySpawner : MonoBehaviour
                 Skeleton newSkeleton = newEnemy.GetComponentInChildren<Skeleton>();
                 if (newSkeleton != null)
                 {
-                    newSkeleton.NavBar = _navigationBar;
+                    newSkeleton.Wallet = _wallet;
                 }
 
                 newEnemy.transform.position = new Vector3(

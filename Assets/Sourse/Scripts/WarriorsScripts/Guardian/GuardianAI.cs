@@ -8,7 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 public class GuardianAI : BaseAILogic
 {
     [SerializeField] private Transform _target;
-    [SerializeField] private PcInput _pcInput;
+    [SerializeField] private PlayerInput _pcInput;
     [SerializeField] private float _stopDistance;
 
     private void Start()
@@ -18,7 +18,7 @@ public class GuardianAI : BaseAILogic
         _stopDistance = Random.Range(0.1f, 1.995f);
     }
 
-    public void GetInput(PcInput input)
+    public void GetInput(PlayerInput input)
     {
         _pcInput = input;
         _pcInput.OnDestinationChanged += ChangePoint;
@@ -45,7 +45,7 @@ public class GuardianAI : BaseAILogic
         switch (_state)
         {
             case AIState.Patrol:
-                ChangeAnimState(1);
+                _animator.SetInteger("AnimState", 2);
                 HanlePatrol();
                 ScanSurroundings();
                 break;
@@ -75,7 +75,7 @@ public class GuardianAI : BaseAILogic
         }
 
         _state = AIState.Patrol;
-        MoveTowardsTarget();
+        transform.position = Vector3.MoveTowards(transform.position, _destination.position, _thisWarrior.MovementSpeed * Time.deltaTime);
     }
     
 }

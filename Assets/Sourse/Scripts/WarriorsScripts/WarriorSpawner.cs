@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class WarriorSpawner : MonoBehaviour
 {
-
-
-    [SerializeField] private NavigationBar _navBar;
-    [SerializeField] private Wallet _wallet;
+    [Inject] private Wallet _wallet;
     [SerializeField] private GameObject _warriorPrefab;
 
     [SerializeField] private GameObject _HireTransformPosition;
@@ -19,7 +17,6 @@ public class WarriorSpawner : MonoBehaviour
     private void Start()
     {
         _camera = Camera.main;
-        _wallet = _navBar.Wallet;
     }
 
     public void SpawnWarrior()
@@ -32,7 +29,7 @@ public class WarriorSpawner : MonoBehaviour
             GameObject WarriorObject = Instantiate(_warriorPrefab, _spawnpoint);
             Warrior WarriorComponent = WarriorObject.GetComponent<Warrior>();
             GuardianAI guardianAI = WarriorObject.GetComponent<GuardianAI>();
-            guardianAI.GetInput(_navBar.PcInput);
+            //guardianAI.GetInput(_navBar.PcInput);
             WarriorComponent.HireShower.SetPosition(_HireTransformPosition);
             WarriorComponent.IsPlayerUnit = true;
 
