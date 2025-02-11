@@ -2,15 +2,13 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent (typeof(BoxCollider2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class BaseAILogic : MonoBehaviour
 {
     [SerializeField] protected AIState _state;
     [SerializeField] protected Transform _destination;
-
     [SerializeField] protected bool _isChilled;
     [SerializeField] protected bool _attacking;
-
     protected CapsuleCollider2D _capsuleCollider;
     protected BoxCollider2D _boxCollider;
     protected Warrior _thisWarrior;
@@ -69,7 +67,6 @@ public class BaseAILogic : MonoBehaviour
 
             default: break;
         }
-
     }
 
     public virtual void HandleIdle()
@@ -175,7 +172,6 @@ public class BaseAILogic : MonoBehaviour
 
     }
 
-
     private protected void ScanSurroundings()
     {
         float rayDistance = _thisWarrior.EnemyCheckRadius; // Дальность луча
@@ -217,15 +213,15 @@ public class BaseAILogic : MonoBehaviour
             return;
         }
     }
+    public enum AIState
+    {
+        Idle,       // Состояние покоя
+        Patrol,     // Патрулирование
+        Chase,      // Преследование
+        Attack,     // Атака
+        Block,
+        Death,
+    }
 }
 
 
-public enum AIState
-{
-    Idle,       // Состояние покоя
-    Patrol,     // Патрулирование
-    Chase,      // Преследование
-    Attack,     // Атака
-    Block,
-    Death,
-}

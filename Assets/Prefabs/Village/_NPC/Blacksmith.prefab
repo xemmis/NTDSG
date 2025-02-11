@@ -1547,33 +1547,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de62822770922f54189f34eb7b9f4f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogueText: {fileID: 3528353856779594936}
-  TypingSpeed: 0.05
-  StartTypingSpeed: 0.05
-  IsExit: 0
-  _spacesForPause: 30
-  _greetings: "Ah, well met, wanderer! Ye\u2019ve got the look of one who\u2019s
-    seen a fair share o\u2019 roads and battles. Come, sit ye down by the fire. Ain\u2019t
-    no better way to warm yer bones than a good fire and a tall tale. What brings
-    ye to these parts? A quest, I reckon? Or just wanderin\u2019 'til the world gives
-    ye somethin' worth chasin'?"
-  _meetings: 
-  _aboutVillage: "What, you want to hear about the village, huh? This ain\u2019t
-    no storybook for you to flip through! I\u2019ve got work up to my ears, and here
-    you are, wasting my time. If you want a village tale, go ask anyone else in the
-    street! But if you come to me, better have something serious to talk about, or
-    I\u2019ll really start getting mad!"
-  _exit: Hey, where do you think you're going? My time ain't endless, you know! I'm
-    a blacksmith, not a free chat partner for your pointless talk! Walk away with
-    nothing, huh? Fine, but next time you show up, you'd better have a job for me,
-    not just nonsense!
-  _upgrade: "Well, well, look at you, decided to upgrade your gear, huh? Don\u2019t
-    you worry, I\u2019ll make it all shine like new. Just don\u2019t forget, I don\u2019t
-    make my coin from magic scrolls! Pay up, don\u2019t be shy \u2014 and you\u2019ll
-    get what you came for. And if you want more upgrades later, just swing by, I\u2019m
-    always happy to help. But remember, when it comes to this, I\u2019m the one who\u2019s
-    always number one!"
-  _uiButtons: {fileID: 1281004844604957710}
+  dialogueText: {fileID: 0}
+  typingSpeed: 0.05
+  uiButtons: {fileID: 0}
+  dialogueEntries: []
 --- !u!1 &6667002179047037401
 GameObject:
   m_ObjectHideFlags: 0
