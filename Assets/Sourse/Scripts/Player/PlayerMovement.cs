@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -36,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleMovement();
+        if (_currentAction != Action.Climb) HandleMovement();
     }
 
     private void Update()
@@ -58,43 +59,49 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             _currentAction = Action.Stay;
-            _currentSpeed = Mathf.Lerp(_currentSpeed, 0f, _deceleration);
+            _currentSpeed = 0;
         }
 
         _rigidBody.velocity = new Vector2(_currentSpeed, _rigidBody.velocity.y);
     }
-
-    private void HandleClimb()
-    {        
-        float dirY = Input.GetAxis("Vertical");
-
-        if (dirY != 0)
-        {
-            _currentSpeed = Mathf.Lerp(_currentSpeed, dirY * _climbSpeed, _acceleration * Time.fixedDeltaTime);
-            _currentAction = Action.Climb;
-        }
-        else
-        {
-            _currentSpeed = 0;
-        }
+    
+    public void HandleClimb(float climbDistance)
+    {
+        StartCoroutine(LadderClimbTick(climbDistance));
     }
 
+    private IEnumerator LadderClimbTick(float distance)
+    {
+        UseLadder();
+        yield return new WaitForFixedUpdate();
+        _rigidBody.velocity = new Vector2(0, _climbSpeed);
+        if (transform.position.y < distance) StartCoroutine(LadderClimbTick(distance));
+        else EndLadder();
+    }
 
     private void HandleAnimation()
     {
         if (_currentAction == Action.Run) _animator.SetInteger("AnimState", 1);
         if (_currentAction == Action.Stay) _animator.SetInteger("AnimState", 0);
-        if (_currentAction == Action.Climb) _animator.SetTrigger("Climbing");
-        
     }
 
     private void UseLadder()
     {
+        _animator.SetBool("Climbing", true);
         _currentAction = Action.Climb;
     }
 
     private void EndLadder()
     {
+        _animator.SetBool("Climbing", false);
         _currentAction = Action.Stay;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<IsInteractable>(out IsInteractable interactable))
+        {
+            interactable.Interact();
+        }
     }
 }
