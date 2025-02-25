@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 2880419049824030025}
   - component: {fileID: 1461244015034453695}
   - component: {fileID: 8808045751407702590}
-  - component: {fileID: 4236048701587657309}
-  - component: {fileID: 5607436674666294672}
   - component: {fileID: 4755964898269769510}
   m_Layer: 0
   m_Name: SkelettonPrefab
@@ -137,60 +135,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4236048701587657309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8131933929551738523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1768f2d8885143846b5aec20148232b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _state: 0
-  _destination: {fileID: 0}
-  _rayDistance: 2
-  _isChilled: 0
-  _attacking: 0
-  <EnemyWarrior>k__BackingField: {fileID: 0}
---- !u!114 &5607436674666294672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8131933929551738523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab7f53635a084db44ab9615d61255dc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Health>k__BackingField: 0
-  IsPlayerUnit: 0
-  _minHealthRand: 0
-  _maxHealthRand: 0
-  _minStrRand: 0
-  _maxStrRand: 0
-  _minArmRand: 0
-  _maxArmRand: 0
-  _minDextRand: 0
-  _maxDextRand: 0
-  HireShower: {fileID: 0}
-  MovementSpeed: 0
-  AttackSpeed: 0
-  AttackRange: 0
-  EnemyCheckRadius: 5
-  attackSpeedModifier: 0.5
-  movementSpeedModifier: 0.5
-  _baseAttackSpeed: 1
-  _baseMovementSpeed: 5
-  <SpawnPersents>k__BackingField: 0
-  Wallet: {fileID: 0}
-  _logic: {fileID: 0}
-  _minEarnings: 0
-  _maxEarnings: 0
 --- !u!58 &4755964898269769510
 CircleCollider2D:
   m_ObjectHideFlags: 0
