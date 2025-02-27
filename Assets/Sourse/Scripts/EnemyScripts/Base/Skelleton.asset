@@ -15,7 +15,8 @@ MonoBehaviour:
   Speed: 5
   _maxHealth: 100
   _currentHealth: 0
-  Damage: 7
+  Invincible: 0
+  Damage: 5
   PercentItems:
   - Name: Block
-    Value: 0
+    Value: 30

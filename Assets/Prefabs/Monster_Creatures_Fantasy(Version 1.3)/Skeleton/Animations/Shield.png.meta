@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: eb8278b6aaba91e4e8e4f060d68788f6
+guid: 12c93c2a556fae54b91d76289435d634
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -145,15 +145,28 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Walk_0
+      name: Shield_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 30
+        x: 36
+        y: 28
         width: 115
         height: 100
       alignment: 0
@@ -163,18 +176,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37f4751b63ad0494eb56fa295c551361
-      internalID: -1657493774
+      spriteID: 8b9a3a3bba661b343b8daf258053776d
+      internalID: 96508444
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk_1
+      name: Shield_1
       rect:
         serializedVersion: 2
-        x: 170
-        y: 30
+        x: 185
+        y: 28
         width: 115
         height: 100
       alignment: 0
@@ -184,18 +197,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6aaff9dc83bc0a84cad2d175ea439b44
-      internalID: 1584616420
+      spriteID: 134267c21e17d454d94897dd5f7d4060
+      internalID: -1086807736
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk_2
+      name: Shield_2
       rect:
         serializedVersion: 2
-        x: 320
-        y: 30
+        x: 339
+        y: 28
         width: 115
         height: 100
       alignment: 0
@@ -205,19 +218,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e66113efec5057a46ae3cd67448afc5f
-      internalID: 2047374082
+      spriteID: 41b4d32f8bcf76c4bb79d3451b735d66
+      internalID: 1117098234
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk_3
+      name: Shield_3
       rect:
         serializedVersion: 2
-        x: 470
-        y: 30
-        width: 115
+        x: 496
+        y: 28
+        width: 104
         height: 100
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -226,8 +239,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca9e2773118c6c34da87abb1c34de641
-      internalID: -1957678936
+      spriteID: 2e7f0a771af777f4691bcfadc56f83ac
+      internalID: 1976253353
       vertices: []
       indices: 
       edges: []
@@ -243,10 +256,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Walk_0: -1657493774
-      Walk_1: 1584616420
-      Walk_2: 2047374082
-      Walk_3: -1957678936
+      Shield_0: 96508444
+      Shield_1: -1086807736
+      Shield_2: 1117098234
+      Shield_3: 1976253353
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

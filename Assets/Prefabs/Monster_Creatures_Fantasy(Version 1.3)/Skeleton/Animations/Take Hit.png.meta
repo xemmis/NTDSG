@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e708c19169bd99745adc72e036f9aff4
+guid: 38205e3989e29854e8e0e4aa37846b72
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -145,11 +145,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle_0
+      name: Take Hit_0
       rect:
         serializedVersion: 2
         x: 20
@@ -163,14 +176,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d082423ad14750548a1d702d54e6de0c
-      internalID: 674048473
+      spriteID: 07149255597ce9a4da0f6d9475e11767
+      internalID: 1492019211
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_1
+      name: Take Hit_1
       rect:
         serializedVersion: 2
         x: 170
@@ -184,14 +197,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 643d8ea93d74b42439e8159179d6852f
-      internalID: 37471285
+      spriteID: 645ebb051a2048a4b90b500b2965129b
+      internalID: -21565558
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_2
+      name: Take Hit_2
       rect:
         serializedVersion: 2
         x: 320
@@ -205,14 +218,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74cb1e68e9a94ad4e936591a1e3d7168
-      internalID: 543985970
+      spriteID: 75216eb523acfe84d9223b535b28a212
+      internalID: 2020738957
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_3
+      name: Take Hit_3
       rect:
         serializedVersion: 2
         x: 470
@@ -226,8 +239,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: baab61d6c735ba84da1058d21dd9a11b
-      internalID: -2081095549
+      spriteID: 7c92bb90c6b639148b05cc6f278b490f
+      internalID: -1193618715
       vertices: []
       indices: 
       edges: []
@@ -243,10 +256,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Idle_0: 674048473
-      Idle_1: 37471285
-      Idle_2: 543985970
-      Idle_3: -2081095549
+      Take Hit_0: 1492019211
+      Take Hit_1: -21565558
+      Take Hit_2: 2020738957
+      Take Hit_3: -1193618715
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

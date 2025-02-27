@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 38205e3989e29854e8e0e4aa37846b72
+guid: eb8278b6aaba91e4e8e4f060d68788f6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -145,11 +145,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Take Hit_0
+      name: Walk_0
       rect:
         serializedVersion: 2
         x: 20
@@ -157,20 +170,20 @@ TextureImporter:
         width: 115
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07149255597ce9a4da0f6d9475e11767
-      internalID: 1492019211
+      spriteID: 37f4751b63ad0494eb56fa295c551361
+      internalID: -1657493774
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Take Hit_1
+      name: Walk_1
       rect:
         serializedVersion: 2
         x: 170
@@ -178,20 +191,20 @@ TextureImporter:
         width: 115
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 645ebb051a2048a4b90b500b2965129b
-      internalID: -21565558
+      spriteID: 6aaff9dc83bc0a84cad2d175ea439b44
+      internalID: 1584616420
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Take Hit_2
+      name: Walk_2
       rect:
         serializedVersion: 2
         x: 320
@@ -199,20 +212,20 @@ TextureImporter:
         width: 115
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75216eb523acfe84d9223b535b28a212
-      internalID: 2020738957
+      spriteID: e66113efec5057a46ae3cd67448afc5f
+      internalID: 2047374082
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Take Hit_3
+      name: Walk_3
       rect:
         serializedVersion: 2
         x: 470
@@ -220,14 +233,14 @@ TextureImporter:
         width: 115
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c92bb90c6b639148b05cc6f278b490f
-      internalID: -1193618715
+      spriteID: ca9e2773118c6c34da87abb1c34de641
+      internalID: -1957678936
       vertices: []
       indices: 
       edges: []
@@ -243,10 +256,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Take Hit_0: 1492019211
-      Take Hit_1: -21565558
-      Take Hit_2: 2020738957
-      Take Hit_3: -1193618715
+      Walk_0: -1657493774
+      Walk_1: 1584616420
+      Walk_2: 2047374082
+      Walk_3: -1957678936
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

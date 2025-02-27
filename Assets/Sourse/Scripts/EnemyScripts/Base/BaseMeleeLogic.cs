@@ -1,22 +1,22 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class BaseMeleeLogic : MonoBehaviour, ISAlive
 {
+    [SerializeField] private protected PlayerStats _playerStats;
+    [SerializeField] private CharacterData _template;
+    [SerializeField] private CharacterData _stats;
     [SerializeField] private float _detectionRange;
     [SerializeField] private float _attackRange;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private bool _isAttack;
-    [SerializeField] private PlayerStats _playerStats;
-    [SerializeField] private protected CharacterData _stats;
     public EnemyAction Action;
-    private Rigidbody2D _rigidBody;
-    private BoxCollider2D _boxCollider;
-    private SpriteRenderer _spriteRenderer;
+    private protected Rigidbody2D _rigidBody;
+    private protected BoxCollider2D _boxCollider;
+    private protected SpriteRenderer _spriteRenderer;
     private protected Animator _animator;
 
     private void Awake()
@@ -29,8 +29,10 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
 
     private void Start()
     {
+        _stats = _template.Clone();
         _stats.Initialize();
         _stats.OnDeathEvent += OnDeath;
+        Physics2D.IgnoreLayerCollision(gameObject.layer, gameObject.layer, true);
     }
 
     private void Update()
@@ -42,7 +44,6 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
     {
         Idle,
         Chase,
-        Block,
         Attack,
         RunAway,
         Death
@@ -60,9 +61,6 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
             case EnemyAction.Chase:
                 if (_stats.CurrentHealth <= 0) Action = EnemyAction.Death;
                 ChaseHandler();
-                break;
-
-            case EnemyAction.Block:
                 break;
 
             case EnemyAction.Attack:
@@ -113,22 +111,12 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
 
     public virtual void ChaseHandler()
     {
-        // Вычисляем направление к игроку
         Vector2 direction = (_playerStats.gameObject.transform.position - transform.position).normalized;
-        // Если игрок вне зоны атаки, двигаемся к нему
-        if (!AttackRangeCheck())
-        {
-            _rigidBody.velocity = direction * _stats.Speed;
-        }
-        else
-        {
-            // Если игрок в зоне атаки, переключаемся на атаку
-            Action = EnemyAction.Attack;
-        }
 
-        // Отражаем спрайт в зависимости от направления
+        if (!AttackRangeCheck()) _rigidBody.velocity = direction * _stats.Speed;
+        else Action = EnemyAction.Attack;
+
         _spriteRenderer.flipX = direction.x < 0 ? true : direction.x > 0 ? false : _spriteRenderer.flipX;
-        // Управляем анимациями
         _animator.SetBool("Idle", false);
         _animator.SetBool("Chase", true);
     }
@@ -143,30 +131,20 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
             return;
         }
 
-        // Запускаем анимацию атаки
         _animator.SetTrigger("Attack");
     }
 
     private IEnumerator AttackTick()
     {
         _isAttack = true;
-
-        // Ждём перед атакой
         yield return new WaitForSeconds(_attackSpeed);
-
-        // Если игрок ушёл из зоны атаки, возвращаемся к преследованию
-
-
-        // Сбрасываем флаг атаки
         _isAttack = false;
     }
 
     private bool AttackRangeCheck()
     {
-        // Вычисляем расстояние до игрока
         float distanceToPlayer = Vector2.Distance(_playerStats.gameObject.transform.position, transform.position);
 
-        // Если игрок в зоне атаки
         if (distanceToPlayer <= _attackRange)
         {
             Action = EnemyAction.Attack;
@@ -182,11 +160,9 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
 
     public void DealDamage()
     {
-        // Наносим урон игроку
         _playerStats.TakeHit(_stats.Damage);
         Debug.Log($"Enemy dealt {_stats.Damage} damage to player.");
     }
-
 
     public virtual bool BlockHandler()
     {
@@ -204,7 +180,6 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
         return true;
 
     }
-
 
     public virtual void RunAwayHandler() { }
 

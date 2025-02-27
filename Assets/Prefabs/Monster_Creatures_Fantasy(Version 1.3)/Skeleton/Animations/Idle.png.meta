@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 12c93c2a556fae54b91d76289435d634
+guid: e708c19169bd99745adc72e036f9aff4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -145,89 +145,102 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shield_0
+      name: Idle_0
       rect:
         serializedVersion: 2
-        x: 36
-        y: 28
+        x: 20
+        y: 30
         width: 115
         height: 100
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b9a3a3bba661b343b8daf258053776d
-      internalID: 96508444
+      spriteID: d082423ad14750548a1d702d54e6de0c
+      internalID: 674048473
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shield_1
+      name: Idle_1
       rect:
         serializedVersion: 2
-        x: 185
-        y: 28
+        x: 170
+        y: 30
         width: 115
         height: 100
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 134267c21e17d454d94897dd5f7d4060
-      internalID: -1086807736
+      spriteID: 643d8ea93d74b42439e8159179d6852f
+      internalID: 37471285
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shield_2
+      name: Idle_2
       rect:
         serializedVersion: 2
-        x: 339
-        y: 28
+        x: 320
+        y: 30
         width: 115
         height: 100
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41b4d32f8bcf76c4bb79d3451b735d66
-      internalID: 1117098234
+      spriteID: 74cb1e68e9a94ad4e936591a1e3d7168
+      internalID: 543985970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shield_3
+      name: Idle_3
       rect:
         serializedVersion: 2
-        x: 496
-        y: 28
-        width: 104
+        x: 470
+        y: 30
+        width: 115
         height: 100
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e7f0a771af777f4691bcfadc56f83ac
-      internalID: 1976253353
+      spriteID: baab61d6c735ba84da1058d21dd9a11b
+      internalID: -2081095549
       vertices: []
       indices: 
       edges: []
@@ -243,10 +256,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Shield_0: 96508444
-      Shield_1: -1086807736
-      Shield_2: 1117098234
-      Shield_3: 1976253353
+      Idle_0: 674048473
+      Idle_1: 37471285
+      Idle_2: 543985970
+      Idle_3: -2081095549
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

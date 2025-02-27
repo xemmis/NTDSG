@@ -20,7 +20,7 @@ public class PlayerStats : MonoBehaviour, ISAlive
 
     public void TakeHit(float damage)
     {
-        if (damage < 0) return;
+        if (damage < 0 && _characterData.Invincible) return;
         _animator.SetTrigger("Hurt");
         OnHitAction?.Invoke();
         _characterData.TakeDamage(damage);

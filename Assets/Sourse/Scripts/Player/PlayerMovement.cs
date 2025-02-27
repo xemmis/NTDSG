@@ -11,7 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _deceleration = 5f; // Замедление
     [SerializeField] private float _currentSpeed = 0f;
     [SerializeField] private Action _currentAction;
-
+    [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] CharacterData _characterData;
+    private IsInteractable _object;
     private Animator _animator;
     private Rigidbody2D _rigidBody;
     private SpriteRenderer _spriteRenderer;
@@ -64,44 +66,113 @@ public class PlayerMovement : MonoBehaviour
 
         _rigidBody.velocity = new Vector2(_currentSpeed, _rigidBody.velocity.y);
     }
-    
-    public void HandleClimb(float climbDistance)
+
+    public void HandleClimb(Transform climbPositon)
     {
-        StartCoroutine(LadderClimbTick(climbDistance));
+        print(climbPositon);
+        StartCoroutine(LadderClimbTick(climbPositon));
     }
 
-    private IEnumerator LadderClimbTick(float distance)
+    private IEnumerator LadderClimbTick(Transform targetY)
     {
-        UseLadder();
-        yield return new WaitForFixedUpdate();
-        _rigidBody.velocity = new Vector2(0, _climbSpeed);
-        if (transform.position.y < distance) StartCoroutine(LadderClimbTick(distance));
-        else EndLadder();
-    }
+        UseLadder(); // Начинаем использовать лестницу
 
+        // Определяем направление движения
+        float direction = targetY.position.y > transform.position.y ? 1 : -1;
+
+        // Двигаемся в направлении targetY
+        _rigidBody.velocity = new Vector2(0, _climbSpeed * direction);
+
+        // Ждём следующего кадра
+        yield return null;
+
+        // Проверяем, достигли ли мы целевой позиции
+        if ((direction > 0 && transform.position.y < targetY.position.y) ||
+            (direction < 0 && transform.position.y > targetY.position.y))
+        {
+            // Если не достигли, продолжаем движение
+            StartCoroutine(LadderClimbTick(targetY));
+        }
+        else
+        {
+            // Если достигли, завершаем движение
+            EndLadder();
+        }
+    }
     private void HandleAnimation()
     {
-        if (_currentAction == Action.Run) _animator.SetInteger("AnimState", 1);
-        if (_currentAction == Action.Stay) _animator.SetInteger("AnimState", 0);
+        if (_currentAction == Action.Run)
+        {
+            _animator.SetInteger("AnimState", 1);            
+        }
+
+        if (_currentAction == Action.Stay)
+        {
+            _animator.SetInteger("AnimState", 0);            
+        }
+        if (Input.GetKeyDown(KeyCode.C) && _currentAction == Action.Run) _animator.SetTrigger("Slide");
+    }
+
+    public void StartSlide()
+    {
+        _characterData.Invincible = true;
+        int currentLayer = gameObject.layer;
+        int enemyLayer = GetFirstLayerFromMask(_enemyLayer);
+        Physics2D.IgnoreLayerCollision(currentLayer, enemyLayer, true);
+    }
+
+    public void EndSlide()
+    {
+        _characterData.Invincible = false;
+        int currentLayer = gameObject.layer;
+        int enemyLayer = GetFirstLayerFromMask(_enemyLayer);
+        Physics2D.IgnoreLayerCollision(currentLayer, enemyLayer, false);
     }
 
     private void UseLadder()
     {
+        int currentLayer = gameObject.layer;
+        int groundLayer = LayerMask.NameToLayer("Ground");
         _animator.SetBool("Climbing", true);
+        Physics2D.IgnoreLayerCollision(currentLayer, groundLayer, true);
         _currentAction = Action.Climb;
+    }
+
+    private int GetFirstLayerFromMask(LayerMask layerMask)
+    {
+        int layerNumber = 0;
+        int mask = layerMask.value;
+
+        if (mask == 0) return -1; // Если маска пуста
+
+        while ((mask & 1) == 0) // Ищем первый установленный бит
+        {
+            mask >>= 1;
+            layerNumber++;
+        }
+
+        return layerNumber;
     }
 
     private void EndLadder()
     {
+        _rigidBody.velocity = Vector2.zero;
+        int currentLayer = gameObject.layer;
+        int groundLayer = LayerMask.NameToLayer("Ground");
+        Physics2D.IgnoreLayerCollision(currentLayer, groundLayer, false);
         _animator.SetBool("Climbing", false);
         _currentAction = Action.Stay;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.TryGetComponent<IsInteractable>(out IsInteractable interactable))
         {
-            interactable.Interact();
+            if (Input.GetKey(KeyCode.E))
+            {
+                print("1");
+                interactable.Interact();
+            }
         }
     }
 }

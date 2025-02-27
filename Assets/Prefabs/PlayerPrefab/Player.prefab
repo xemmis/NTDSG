@@ -304,7 +304,7 @@ Transform:
   - {fileID: 3665627435402431315}
   - {fileID: 928443437428740031}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8466901702125818839
 SpriteRenderer:
@@ -326,7 +326,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2e2e831ee69093641a9b2b8568be8668, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -485,6 +485,7 @@ MonoBehaviour:
   _damage: 15
   _comboTick: 0.8
   _attackRange: 2.3
+  _playerStats: {fileID: 0}
 --- !u!114 &7720081019121144894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,9 +498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76ae83868f25724caa3fae56d1bae61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Health>k__BackingField: 0
-  <MaxHealth>k__BackingField: 0
-  <Strength>k__BackingField: 0
+  _characterData: {fileID: 0}
 --- !u!1 &6558806404470855082
 GameObject:
   m_ObjectHideFlags: 0
