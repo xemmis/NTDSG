@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b90df226a317e5f4986d3a5e6da4347b, type: 3}
-  m_Name: Skelleton
+  m_Name: Goblin
   m_EditorClassIdentifier: 
-  Speed: 5
+  Speed: 10
   _maxHealth: 100
   _currentHealth: 0
   Invincible: 0
-  Damage: 6.6
+  Damage: 3.3
   PercentItems:
   - Name: Special
-    Value: 30
+    Value: 20
+  - Name: Coward
+    Value: 35

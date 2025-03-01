@@ -8,7 +8,7 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
 {
     [SerializeField] private protected PlayerStats _playerStats;
     [SerializeField] private CharacterData _template;
-    [SerializeField] private CharacterData _stats;
+    [SerializeField] private  protected CharacterData _stats;
     [SerializeField] private float _detectionRange;
     [SerializeField] private float _attackRange;
     [SerializeField] private float _attackSpeed;
@@ -134,7 +134,7 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
         _animator.SetTrigger("Attack");
     }
 
-    private IEnumerator AttackTick()
+    private protected IEnumerator AttackTick()
     {
         _isAttack = true;
         yield return new WaitForSeconds(_attackSpeed);
@@ -164,19 +164,19 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
         Debug.Log($"Enemy dealt {_stats.Damage} damage to player.");
     }
 
-    public virtual bool BlockHandler()
+    public virtual bool SpecialHandler()
     {
         float rand = Random.Range(0, 100);
         float blockRand = 0;
         for (int i = 0; i < _stats.PercentItems.Count; i++)
         {
-            if (_stats.PercentItems[i].Name == "Block")
+            if (_stats.PercentItems[i].Name == "Special")
             {
                 blockRand = _stats.PercentItems[i].Value;
             }
         }
         if (rand > blockRand) return false;
-        _animator.SetTrigger("Block");
+        _animator.SetTrigger("Special");
         return true;
 
     }
@@ -197,12 +197,67 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
         Gizmos.DrawWireSphere(transform.position, _detectionRange);
     }
 
-    public void TakeHit(float damage)
+    public virtual void TakeHit(float damage)
     {
         if (_stats.CurrentHealth <= 0) return;
-        if (BlockHandler()) return;
+        if (SpecialHandler()) return;
         _stats.TakeDamage(damage);
         _animator.SetTrigger("Damaged");
     }
 }
 
+public class GoblinMeleeLogic : BaseMeleeLogic
+{
+    [SerializeField] private GameObject _bombPrefab;
+    
+    public override void TakeHit(float damage)
+    {
+        if (_stats.CurrentHealth <= 0) return;        
+        _animator.SetTrigger("Damaged");
+    }
+
+    private void ThrowBomb()
+    {
+
+    }
+
+    public override void AttackHandler()
+    {
+        if (SpecialHandler())
+        {
+            StartCoroutine(AttackTick());
+            ThrowBomb();
+            return;
+        }
+
+        base.AttackHandler();
+    }
+
+}
+
+
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CircleCollider2D))]
+public class Bomb : MonoBehaviour
+{
+    [SerializeField] private float _damage;
+    [SerializeField] private float _speed;
+    private Rigidbody2D _body;
+    private CircleCollider2D _circleCollider;
+    private PlayerStats _plStats;
+    private Animator _animator;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        _body = GetComponent<Rigidbody2D>();
+        _circleCollider = GetComponent<CircleCollider2D>();
+    }    
+
+    public void BombFly(Vector2 direction)
+    {
+        _body.velocity = direction * _speed * Time.deltaTime;
+    }
+
+
+}

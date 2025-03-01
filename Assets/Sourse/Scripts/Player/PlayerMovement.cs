@@ -103,12 +103,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_currentAction == Action.Run)
         {
-            _animator.SetInteger("AnimState", 1);            
+            _animator.SetInteger("AnimState", 1);
         }
 
         if (_currentAction == Action.Stay)
         {
-            _animator.SetInteger("AnimState", 0);            
+            _animator.SetInteger("AnimState", 0);
         }
         if (Input.GetKeyDown(KeyCode.C) && _currentAction == Action.Run) _animator.SetTrigger("Slide");
     }
@@ -166,11 +166,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        print("1");
         if (collision.TryGetComponent<IsInteractable>(out IsInteractable interactable))
         {
             if (Input.GetKey(KeyCode.E))
             {
-                print("1");
                 interactable.Interact();
             }
         }
