@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2480238013369607323}
   - component: {fileID: 459461192133429180}
   - component: {fileID: 6490865413861443848}
-  - component: {fileID: 1200821951341128173}
+  - component: {fileID: 9101581415879016410}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -29,12 +29,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333952818541402905}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.23, y: 1.12, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2819050381081086340
 SpriteRenderer:
@@ -168,7 +168,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.07455689, y: -0.14580017}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -179,9 +179,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.20141262, y: 0.34389907}
   m_EdgeRadius: 0
---- !u!114 &1200821951341128173
+--- !u!114 &9101581415879016410
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,14 +190,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 333952818541402905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4ae02bb2ce464e4fa5e57af24b02548, type: 3}
+  m_Script: {fileID: 11500000, guid: bbd30c237ff44674c85a42b72b4e55ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _playerStats: {fileID: 0}
   _template: {fileID: 11400000, guid: cae2626c42478ce478a338db66d62b59, type: 2}
   _stats: {fileID: 0}
-  _detectionRange: 4
+  _detectionRange: 5
   _attackRange: 2
-  _attackSpeed: 0.7
+  _attackSpeed: 1.1
   _isAttack: 0
   Action: 0
+  _bombPrefab: {fileID: 2962612095403508691, guid: 79315f46dfdefbb48b8213bc8b516c2f, type: 3}

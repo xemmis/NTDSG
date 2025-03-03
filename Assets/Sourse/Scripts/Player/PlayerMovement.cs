@@ -166,7 +166,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        print("1");
         if (collision.TryGetComponent<IsInteractable>(out IsInteractable interactable))
         {
             if (Input.GetKey(KeyCode.E))

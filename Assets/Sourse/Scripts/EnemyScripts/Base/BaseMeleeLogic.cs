@@ -195,6 +195,7 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
         Gizmos.color = Color.green;
 
         Gizmos.DrawWireSphere(transform.position, _detectionRange);
+        Gizmos.DrawWireSphere(transform.position, _attackRange);
     }
 
     public virtual void TakeHit(float damage)
@@ -206,58 +207,3 @@ public class BaseMeleeLogic : MonoBehaviour, ISAlive
     }
 }
 
-public class GoblinMeleeLogic : BaseMeleeLogic
-{
-    [SerializeField] private GameObject _bombPrefab;
-    
-    public override void TakeHit(float damage)
-    {
-        if (_stats.CurrentHealth <= 0) return;        
-        _animator.SetTrigger("Damaged");
-    }
-
-    private void ThrowBomb()
-    {
-
-    }
-
-    public override void AttackHandler()
-    {
-        if (SpecialHandler())
-        {
-            StartCoroutine(AttackTick());
-            ThrowBomb();
-            return;
-        }
-
-        base.AttackHandler();
-    }
-
-}
-
-
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CircleCollider2D))]
-public class Bomb : MonoBehaviour
-{
-    [SerializeField] private float _damage;
-    [SerializeField] private float _speed;
-    private Rigidbody2D _body;
-    private CircleCollider2D _circleCollider;
-    private PlayerStats _plStats;
-    private Animator _animator;
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-        _body = GetComponent<Rigidbody2D>();
-        _circleCollider = GetComponent<CircleCollider2D>();
-    }    
-
-    public void BombFly(Vector2 direction)
-    {
-        _body.velocity = direction * _speed * Time.deltaTime;
-    }
-
-
-}

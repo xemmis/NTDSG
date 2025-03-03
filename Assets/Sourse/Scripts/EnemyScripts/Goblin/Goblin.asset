@@ -19,6 +19,6 @@ MonoBehaviour:
   Damage: 3.3
   PercentItems:
   - Name: Special
-    Value: 20
+    Value: 30
   - Name: Coward
     Value: 35
